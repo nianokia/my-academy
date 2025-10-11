@@ -5,34 +5,60 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-/* .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-} */
-/* .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* -------- NAV CSS -------- */
+
+/* header {
+  position: relative;
 } */
 
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px dashed white;
+  padding: 5px 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-} */
+.navIcon {
+  display: inline-block;
+  align-self: center;
+  justify-self: center;
+  width: 65px;
+}
+
+.navTitle {
+  display: inline-block;
+  padding: 0px 10px;
+  align-content: center;
+  color: white;
+}
+
+.navLink {
+  display: inline-block;
+  padding: 0px 10px;
+}
+
+/* -------- HOME CSS -------- */
+
+.row {
+  display: flex;
+}
+
+.loginHub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .card {
-  padding: 2em;
+  margin: 0 40px 25px;
+  padding: 20px 60px 40px;
+  background-color: cornflowerblue;
+  color: #242424;
+  border: 6px double #242424;
+  border-radius: 18px;
+}
+
+.routeBtn a {
+  color: white;
 }
