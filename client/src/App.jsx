@@ -61,7 +61,7 @@ const App = () => {
         <div className='navBar'>
           <header>
             <Link to='/home'>
-              <img src="/public/book.svg" className="navIcon" alt="" />
+              <img src="/book.svg" className="navIcon" alt="" />
               <h4 className='navTitle'>My Academy</h4>
             </Link>
           </header>
