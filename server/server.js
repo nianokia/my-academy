@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import User from './models/User.js';
 
 // -------- DEFINE VARIABLES --------
 const app = express();
@@ -17,6 +18,17 @@ const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(clientDistPath)));
+
+// retrieve all data from users table
+app.get('/api/users', async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.json(users);
+    } catch (err) {
+        console.error('Error fetching users: ', err);
+        return res.status(500).json({ err: err.message });
+    }
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(clientDistPath, 'index.html'));
