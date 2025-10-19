@@ -1,0 +1,5 @@
+<!-- Define your server listening port -->
+PORT={yourServerListeningPort}
+DOMAIN='http://localhost:{yourServerListeningPort}/'
+
+DATABASE_URI='postgresql://localhost/{yourDatabaseName}'
