@@ -6,6 +6,10 @@ import SignUp from './pages/SignUp.jsx'
 import Home from './pages/Home.jsx'
 import StudentDash from './pages/StudentDash.jsx'
 import InstructorDash from './pages/InstructorDash.jsx'
+import UserProfile from './pages/UserProfile.jsx'
+import UserTable from './pages/UserTable.jsx'
+import StudentCourses from './pages/StudentCourses.jsx'
+import StudentGrades from './pages/StudentGrades.jsx'
 
 // -------- IMPORT CSS --------
 import './App.css'
@@ -83,7 +87,12 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path='/student' element={<StudentDash />} />
         <Route path='/instructor' element={<InstructorDash />} />
+        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/users' element={<UserTable />} />
+        <Route path='/student-courses' element={<StudentCourses />} />
+        <Route path='/student-grades' element={<StudentGrades />} />
       </Routes>
+      <footer><a href="https://lordicon.com/" target='onBlank' style={{fontSize: '10px'}}>Icons by Lordicon.com</a></footer>
     </>
   );
 };
