@@ -4,6 +4,7 @@ import 'dotenv/config';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import User from './models/User.js';
+import authRoutes from './routes/authRoutes.js';
 
 // -------- DEFINE VARIABLES --------
 const app = express();
@@ -18,6 +19,9 @@ const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(clientDistPath)));
+app.use('/api/auth', authRoutes);
+
+// -------- DEFINE ROUTES --------
 
 // retrieve all data from users table
 app.get('/api/users', async (req, res) => {
