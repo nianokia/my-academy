@@ -42,7 +42,7 @@ const User = sequelize.define('User', {
         validate: { isEmail: true },
     },
     role: {
-        type: DataTypes.ENUM('student', 'teacher'),
+        type: DataTypes.ENUM('student', 'instructor'),
         allowNull: false,
     },
     major: {
