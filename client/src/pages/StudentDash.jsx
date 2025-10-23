@@ -1,10 +1,12 @@
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
 import { Link } from "react-router";
+import LoginForm from "../components/LoginForm";
 
 const StudentDash = () => {
   return (
     <>
       <h1>Student Dashboard</h1>
+      <LoginForm />
       <Link to='/profile'>
         <img src="/src/assets/profile.gif" style={{ width: "30px", textAlign: "right", marginLeft: "350px" }} alt="profile icon" />
       </Link>

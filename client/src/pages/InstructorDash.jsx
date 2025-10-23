@@ -1,10 +1,12 @@
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
 import { Link } from "react-router";
+import InstructorRegister from "../components/InstructorRegister";
 
 const InstructorDash = () => {
   return (
     <>
       <h1>Instructor Dashboard</h1>
+      <InstructorRegister />
       <Link to='/profile'>
         <img src="/src/assets/profile.gif" style={{ width: "30px", textAlign: "right", marginLeft: "350px" }} alt="" />
       </Link>
