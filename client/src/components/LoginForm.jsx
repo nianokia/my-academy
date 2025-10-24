@@ -20,27 +20,15 @@ export default function LoginForm() {
       // --- Make API call to login user ---
       const res = await loginUser(formData);
       const { token, user } = res.data;
-      const localUser = JSON.parse(localStorage.getItem('user'));
-
-      // // --- Store the received token in localStorage ---
-      // localStorage.setItem('token', token);
-
-      // // --- Store user data in localStorage ---
-      // localStorage.setItem('user', JSON.stringify(user));
 
       // --- Update global auth state via context ---
       login(user, token);
 
       console.log('Logged in successfully!');
-      console.log('localUser Data:', localUser);
       console.log('User Data:', user);
 
       // --- Redirect based on role ---
-      if (user.role === 'student') {
-        navigate('/student');
-      } else if (user.role === 'instructor') {
-        navigate('/instructor');
-      }
+      navigate(user.role === 'student' ? '/student' : '/instructor');
     } catch (err) {
       alert(err.response?.data?.error || 'Login failed');
     }
