@@ -17,34 +17,34 @@ const UserProfile = () => {
   };
 
   return (
-    <div>
-      <button onClick={handleBack} style={{ background: "none", border: "none", cursor: "pointer" }}>
-        <img src="/src/assets/back.svg" style={{ width: "20px", textAlign: "right", marginRight: "475px", marginTop: "20px" }} alt="Home" />
+    <div className="UserProfile">
+      <button onClick={handleBack} className="backBtn">
+        <img src="/src/assets/back.svg" alt="Left Arrow signifying a back button" />
       </button>
       <h1>{user.first_name}'s Profile</h1>
-      <ul style={{ listStyle: 'none', textAlign: 'start', padding: 0, margin: 0 }}>
-        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <ul>
+        <li>
           <span>Name:</span>
           <span>{user.first_name} {user.last_name}</span>
           <span className="editProfile">✎</span>
         </li>
-        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <li>
           <span>Email:</span>
           <span>{user.email}</span>
           <span className="editProfile">✎</span>
         </li>
-        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <li>
           <span>Password:</span>
           <span>●●●●●●</span>
           <span className="editProfile">✎</span>
         </li>
-        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <li>
           <span>Role:</span>
           <span>{user.role}</span>
           <span className="editProfile">✎</span>
         </li>
         {user.role === 'student' && (
-          <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <li>
             <span>Major:</span>
             <span>{user.major || 'N/A'}</span>
             <span className="editProfile">✎</span>

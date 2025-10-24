@@ -5,6 +5,21 @@
   text-align: center;
 }
 
+/* -------- COMMON CSS -------- */
+
+.backBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backBtn img {
+  width: 20px;
+  text-align: right;
+  margin-right: 475px;
+  margin-top: 20px;
+}
+
 /* -------- NAV CSS -------- */
 
 /* header {
@@ -101,4 +116,38 @@
 .register-form {
   display: flex;
   justify-content: space-around;
+}
+
+/* -------- PROFILE CSS -------- */
+.UserProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.UserProfile h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.UserProfile ul {
+  list-style: none;
+  text-align: start;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.UserProfile li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.editProfile {
+  cursor: pointer;
+  color: cornflowerblue;
 }
