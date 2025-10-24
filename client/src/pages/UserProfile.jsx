@@ -1,38 +1,16 @@
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import AuthContext from "../context/AuthContext.jsx";
 
 const UserProfile = () => {
-  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  console.log('Current User:', user);
 
-  // Define the API route using the environment variable
-  const tableRoute = `${import.meta.env.VITE_DOMAIN}/api/users`;
-  console.log('Table Route:', tableRoute);
-
-  // Fetch users from the tableRoute
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch(tableRoute);
-
-      // Check if response is ok, if not throw an error
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Parse and log response in JSON format
-      const data = await response.json();
-      console.log('Fetched users:', data);
-      setUsers(data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-  
-  // Use useEffect to call fetchUsers whenever the tableRoute changes
-  useEffect(() => {
-    fetchUsers();
-  }, [tableRoute]);
+  // const editProfile = () => {
+  //   navigate('/edit-profile');
+  // }
 
   const handleBack = () => {
     navigate(-1);
@@ -43,17 +21,35 @@ const UserProfile = () => {
       <button onClick={handleBack} style={{ background: "none", border: "none", cursor: "pointer" }}>
         <img src="/src/assets/back.svg" style={{ width: "20px", textAlign: "right", marginRight: "475px", marginTop: "20px" }} alt="Home" />
       </button>
-      <h1>User Profile</h1>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-        {users.map((user) => (
-          <li key={user.id}>
-            <h3>{user.first_name} {user.last_name}</h3>
-            <p>Email: {user.email}</p>
-            <p>Password: ●●●●●●</p>
-            <p>Role: {user.role}</p>
-            <p>Major: {user.major || 'N/A'}</p>
+      <h1>{user.first_name}'s Profile</h1>
+      <ul style={{ listStyle: 'none', textAlign: 'start', padding: 0, margin: 0 }}>
+        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>Name:</span>
+          <span>{user.first_name} {user.last_name}</span>
+          <span className="editProfile">✎</span>
+        </li>
+        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>Email:</span>
+          <span>{user.email}</span>
+          <span className="editProfile">✎</span>
+        </li>
+        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>Password:</span>
+          <span>●●●●●●</span>
+          <span className="editProfile">✎</span>
+        </li>
+        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>Role:</span>
+          <span>{user.role}</span>
+          <span className="editProfile">✎</span>
+        </li>
+        {user.role === 'student' && (
+          <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Major:</span>
+            <span>{user.major || 'N/A'}</span>
+            <span className="editProfile">✎</span>
           </li>
-        ))}
+        )}
       </ul>
     </div>
   );
