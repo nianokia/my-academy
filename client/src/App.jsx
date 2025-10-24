@@ -10,6 +10,7 @@ import UserProfile from './pages/UserProfile.jsx'
 import UserTable from './pages/UserTable.jsx'
 import StudentCourses from './pages/StudentCourses.jsx'
 import StudentGrades from './pages/StudentGrades.jsx'
+import LoginPage from './pages/Login.jsx'
 
 // -------- IMPORT CSS --------
 import './App.css'
@@ -85,6 +86,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path='/student' element={<StudentDash />} />
         <Route path='/instructor' element={<InstructorDash />} />
         <Route path='/profile' element={<UserProfile />} />
