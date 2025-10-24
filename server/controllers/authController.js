@@ -17,6 +17,8 @@ export const register = async (req, res) => {
 
         // --- generate JWT token ---
         const token = jwt.sign({ userId: newUser.id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        // --- respond with token & user info ---
         res.status(201).json({
             message: 'User registered successfully',
             token,
@@ -54,7 +56,20 @@ export const login = async (req, res) => {
 
         // --- generate JWT token ---
         const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.status(200).json({ message: 'Login successful', token, user: { id: user.id, email: user.email, role: user.role } });
+
+        // --- respond with token & user info ---
+        res.status(200).json({ 
+            message: 'Login successful',
+            token,
+            user: { 
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                role: user.role,
+                major: user.major
+            }
+        });
     } catch (err) {
         res.status(500).json({ message: 'Error logging in', error: err.message });
     }
