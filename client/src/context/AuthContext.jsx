@@ -23,6 +23,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    user ? localStorage.setItem("user", JSON.stringify(user)) : localStorage.removeItem("user");
+    token ? localStorage.setItem("token", token) : localStorage.removeItem("token");
+  }, [user, token]);
+
   // ------- LOGIN FUNCTION: sets user & token -------
   const login = (userData, jwtToken) => {
     localStorage.setItem("user", JSON.stringify(userData));
@@ -46,13 +51,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error("useAuth must be used within an AuthProvider");
-//   }
-//   return context;
-// };
 
 export default AuthContext;
