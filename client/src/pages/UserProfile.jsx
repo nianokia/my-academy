@@ -1,14 +1,15 @@
-// -------- IMPORT REACT-ROUTER ELEMENTS --------
+// -------- IMPORTS --------
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import AuthContext from "../context/AuthContext.jsx";
 import Modal from "../components/Modal.jsx";
 import EditProfile from "../components/EditProfile.jsx";
+import { deleteUser } from "../api/user";
 
 const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { user, loading } = useContext(AuthContext);
+  const { user, token, loading, logout } = useContext(AuthContext);
   console.log('Current User:', user);
 
   // --- Close modal & reset role ---
@@ -16,12 +17,25 @@ const UserProfile = () => {
     setIsModalOpen(false);
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    try {
+      // const deletedUser = await deleteUser(user, token);
+      await deleteUser(user.id, token);
+      alert('Your account has been deleted successfully!');
+      // console.log(`${deletedUser.first_name} ${deletedUser.last_name}'s profile successfully deleted \n ID: ${deletedUser.id} \nEmail: ${deletedUser.email}`)
+      
+      logout();
+    } catch (err) {
+      alert('Failed to delete profile. Please try again.');
+      // console.error('Error deleting profile:', err.name, '\n', err.message, '\n Url:', err.config?.url);
+      console.error('Error deleting profile: ', err)
+    }
+  }
+
   const handleBack = () => {
     navigate(-1);
   };
-
-  // if (loading) return <p>Loading profile...</p>;
-  // if (!user) return <p>No user found. Please log in again.</p>;
 
   return (
     <div className="UserProfile">
@@ -70,36 +84,7 @@ const UserProfile = () => {
           )}
         </>
       )}
-      {/* <h1>{user.first_name}'s Profile</h1>
-      <ul>
-        <li>
-          <span>Name:</span>
-          <span>{user.first_name} {user.last_name}</span>
-          <span className="editProfileIcon">✎</span>
-        </li>
-        <li>
-          <span>Email:</span>
-          <span>{user.email}</span>
-          <span className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</span>
-        </li>
-        <li>
-          <span>Password:</span>
-          <span>●●●●●●</span>
-          <span className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</span>
-        </li>
-        <li>
-          <span>Role:</span>
-          <span>{user.role}</span>
-          <span className="editProfileIcon">✎</span>
-        </li>
-        {user.role === 'student' && (
-          <li>
-            <span>Major:</span>
-            <span>{user.major || 'N/A'}</span>
-            <span className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</span>
-          </li>
-        )}
-      </ul> */}
+      <button className="deleteUserBtn" onClick={handleDelete}>Delete User</button>
 
       {/* -------- MODAL FOR REGISTRATION -------- */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
