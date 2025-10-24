@@ -14,9 +14,12 @@ export const register = async (req, res) => {
 
         // --- add properties from req.body into users table through the create User model ---
         const newUser = await User.create({ first_name, last_name, email, password_hash: hashedPassword, role, major });
-        
-        res.status(201).json({ 
+
+        // --- generate JWT token ---
+        const token = jwt.sign({ userId: newUser.id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        res.status(201).json({
             message: 'User registered successfully',
+            token,
             user: {
                 id: newUser.id,
                 first_name: newUser.first_name,
