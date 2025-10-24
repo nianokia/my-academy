@@ -62,3 +62,43 @@
 .routeBtn a {
   color: white;
 }
+
+/* -------- MODAL CSS -------- */
+
+.modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  position: relative;
+  min-width: 400px;
+  background-color: cornflowerblue;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.modal-close {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: transparent;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+}
+
+/* -------- FORM CSS -------- */
+
+.register-form {
+  display: flex;
+  justify-content: space-around;
+}
