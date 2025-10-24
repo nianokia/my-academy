@@ -6,16 +6,26 @@ import 'dotenv/config';
 // -------- DEFINE USER REGISTRATION CONTROLLER --------
 export const register = async (req, res) => {
     // --- destructure req.body to retrieve the following properties ---
-    const { first_name, last_name, email, password_hash, role } = req.body;
+    const { first_name, last_name, email, password_hash, role, major } = req.body;
 
     try {
         // --- hash the password before storing in db ---
         const hashedPassword = await bcrypt.hash(password_hash, 10);
 
         // --- add properties from req.body into users table through the create User model ---
-        const newUser = await User.create({ first_name, last_name, email, password_hash: hashedPassword, role });
+        const newUser = await User.create({ first_name, last_name, email, password_hash: hashedPassword, role, major });
         
-        res.status(201).json({ message: 'User registered successfully', userId: newUser.id });
+        res.status(201).json({ 
+            message: 'User registered successfully',
+            user: {
+                id: newUser.id,
+                first_name: newUser.first_name,
+                last_name: newUser.last_name,
+                email: newUser.email,
+                role: newUser.role,
+                major: newUser.major
+            }
+        });
     } catch (err) {
         res.status(500).json({ message: 'Error registering user', error: err.message });
     }
