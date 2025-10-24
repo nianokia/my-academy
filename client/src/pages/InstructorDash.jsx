@@ -1,22 +1,16 @@
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext.jsx";
+
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const InstructorDash = () => {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  const handleLogout = () => {
-    // --- Remove authentication data ---
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-
-    // --- Redirect to login or homepage ---
-    navigate('/');
-  };
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <>
       <h1>Instructor Dashboard</h1>
+      <h2>Welcome, {user.first_name}!</h2>
       <Link to='/profile'>
         <img src="/src/assets/profile.gif" style={{ width: "30px", textAlign: "right", marginLeft: "350px" }} alt="" />
       </Link>
@@ -25,7 +19,7 @@ const InstructorDash = () => {
         <Link to='/users'><strong>All Users</strong></Link>
       </button>
       <br />
-      <button className="routeBtn" onClick={handleLogout}>Log Out</button>
+      <button className="routeBtn" onClick={logout}>Log Out</button>
     </>
   );
 };
