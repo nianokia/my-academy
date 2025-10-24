@@ -1,7 +1,18 @@
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const StudentDash = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // --- Remove authentication data ---
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // --- Redirect to login or homepage ---
+    navigate('/');
+  };
+
   return (
     <>
       <h1>Student Dashboard</h1>
@@ -16,9 +27,7 @@ const StudentDash = () => {
           <Link to='/student-grades'>Student Grades</Link>
         </button>
       </summary>
-      <button className="routeBtn">
-        <Link to='/home'>Log Out</Link>
-      </button>
+      <button className="routeBtn" onClick={handleLogout}>Log Out</button>
     </>
   );
 };
