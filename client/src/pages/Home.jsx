@@ -11,7 +11,7 @@ const Home = () => {
           <div className="card">
             <h3>Instructor Login</h3>
             <button className="routeBtn">
-              <Link to='/instructor'>Login</Link>
+              <Link to='/login'>Login</Link>
             </button>
           </div>
         </div>
@@ -19,7 +19,7 @@ const Home = () => {
           <div className="card">
             <h3>Student Login</h3>
             <button className="routeBtn">
-              <Link to='/student'>Login</Link>
+              <Link to='/login'>Login</Link>
             </button>
           </div>
         </div>
