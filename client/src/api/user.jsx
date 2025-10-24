@@ -13,3 +13,10 @@ export const updateUser = async (userId, updatedData, token) => {
     );
     return res.data;
 };
+
+export const deleteUser = async (userId, token) => {
+    const res = await axios.delete(`${API_URL}/${userId}`, {
+        headers: {Authorization: `Bearer ${token}`},
+    });
+    return res.data;
+}
