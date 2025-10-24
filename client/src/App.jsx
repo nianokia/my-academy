@@ -64,22 +64,13 @@ import './App.css'
 
 const App = () => {
   const Navigation = () => {
-    // const user = JSON.parse(localStorage.getItem('user'));
     const { user, logout, loading } = useContext(AuthContext);
-    // const handleLogout = () => {
-    //   // --- Remove authentication data ---
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('user');
-
-    //   // --- Redirect to login or homepage ---
-    //   navigate('/');
-    // };
 
     return (
       <>
         <div className='navBar'>
           <header>
-            <Link to='/home'>
+            <Link to={user ? (user.role === 'student' ? '/student' : '/instructor') : '/home'}>
               <img src="/book.svg" className="navIcon" alt="" />
               <h4 className='navTitle'>My Academy</h4>
             </Link>
@@ -91,28 +82,16 @@ const App = () => {
               <>
                 {user ? (
                   <>
-                    {user.role === 'student' && <Link to='/student' className='navLink'>Dashboard</Link>}
-                    {user.role === 'instructor' && <Link to='/instructor' className='navLink'>Dashboard</Link>}
                     <span>{user.first_name}'s Profile</span>
                     <button onClick={logout}>Log Out</button>
-                  </>) : (
-                    <>
-                      <Link to='/login' className='navLink'>Log In</Link>
-                      <Link to='/signup' className='navLink'>Sign Up</Link>
-                    </>
-                  )
-                }
+                  </>
+                ) : (
+                  <>
+                    <Link to='/login' className='navLink'>Log In</Link>
+                    <Link to='/signup' className='navLink'>Sign Up</Link>
+                  </>
+                )}
               </>
-            // {user ? (
-            //   <>
-            //     {user.role === 'student' && <Link to='/student' className='navLink'>Dashboard</Link>}
-            //     {user.role === 'instructor' && <Link to='/instructor' className='navLink'>Dashboard</Link>}
-            //     <span>{user.first_name}'s Profile</span>
-            //     <button onClick={handleLogout}>Log Out</button>
-            //   </>
-            // ) : (
-            //   <Link to='/signup' className='navLink'>Sign Up</Link>
-            // )}
             )}
           </nav>
         </div>
