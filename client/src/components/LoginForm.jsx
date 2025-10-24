@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { loginUser } from '../api/auth';
+import AuthContext from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router';
 
 export default function LoginForm() {
   // --- Set initial form data ---
   const [formData, setFormData] = useState({ email: '', password_hash: '' });
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // --- Handle event changes ---
@@ -18,14 +20,20 @@ export default function LoginForm() {
       // --- Make API call to login user ---
       const res = await loginUser(formData);
       const { token, user } = res.data;
+      const localUser = JSON.parse(localStorage.getItem('user'));
 
-      // --- Store the received token in localStorage ---
-      localStorage.setItem('token', token);
+      // // --- Store the received token in localStorage ---
+      // localStorage.setItem('token', token);
 
-      // --- Store user data in localStorage ---
-      localStorage.setItem('user', JSON.stringify(user));
+      // // --- Store user data in localStorage ---
+      // localStorage.setItem('user', JSON.stringify(user));
+
+      // --- Update global auth state via context ---
+      login(user, token);
 
       console.log('Logged in successfully!');
+      console.log('localUser Data:', localUser);
+      console.log('User Data:', user);
 
       // --- Redirect based on role ---
       if (user.role === 'student') {
