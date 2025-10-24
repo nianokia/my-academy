@@ -5,6 +5,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 // -------- DEFINE VARIABLES --------
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(clientDistPath)));
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 // -------- DEFINE ROUTES --------
 
