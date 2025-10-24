@@ -147,7 +147,17 @@
   width: 100%;
 }
 
-.editProfile {
+.editProfileIcon {
   cursor: pointer;
   color: cornflowerblue;
+}
+
+.EditProfile form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+  width: 80%;
+  /* width: 300px; */
 }
