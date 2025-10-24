@@ -26,11 +26,7 @@ const SignUp = () => {
   const handleSuccessfulRegistration = (role) => {
     setIsModalOpen(false);
     setRole('');
-    if (role === 'student') {
-      navigate('/student');
-    } else if (role === 'instructor') {
-      navigate('/instructor');
-    }
+    navigate(role === 'student' ? '/student' : '/instructor');
   };
 
   return (
