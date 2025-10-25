@@ -161,3 +161,27 @@
   width: 80%;
   /* width: 300px; */
 }
+
+/* USER TABLE */
+
+.userFilters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.userFilters input {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.UserTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.UserTable th {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 2px solid cornflowerblue;
+}
