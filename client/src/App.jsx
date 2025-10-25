@@ -13,6 +13,7 @@ import UserTable from './pages/UserTable.jsx'
 import StudentCourses from './pages/StudentCourses.jsx'
 import StudentGrades from './pages/StudentGrades.jsx'
 import LoginPage from './pages/Login.jsx'
+import AllCourses from './pages/AllCourses.jsx'
 import AuthContext from './context/AuthContext.jsx'
 
 // -------- IMPORT CSS --------
@@ -116,6 +117,7 @@ const App = () => {
         <Route path='/users' element={<UserTable />} />
         <Route path='/student-courses' element={<StudentCourses />} />
         <Route path='/student-grades' element={<StudentGrades />} />
+        <Route path='/courses' element={<AllCourses />} />
       </Routes>
       <footer><a href="https://lordicon.com/" target='onBlank' style={{fontSize: '10px'}}>Icons by Lordicon.com</a></footer>
     </>
