@@ -68,7 +68,23 @@
 .loginHub {
   display: flex;
   align-items: center;
+  justify-content: space-around;
+}
+
+.signInHub {
+  display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+.loginHub .card {
+  margin: 25px auto;
+  padding: 20px 60px 40px;
+  width: 180px;
+  background-color: cornflowerblue;
+  color: #242424;
+  border: 6px double #242424;
+  border-radius: 18px;
 }
 
 .card {

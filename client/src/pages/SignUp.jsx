@@ -32,7 +32,7 @@ const SignUp = () => {
   return (
     <>
       <h1>Sign Up</h1>
-      <div className="row loginHub">
+      <div className="row signInHub">
         <div className="col">
           <div className="card">
             <h3>Instructor Registration</h3>
