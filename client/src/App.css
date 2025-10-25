@@ -7,6 +7,12 @@
 
 /* -------- COMMON CSS -------- */
 
+.profileIcon {
+  width: 30px;
+  margin: 0 auto;
+  padding: 0px 20px;
+}
+
 .backBtn {
   background: none;
   border: none;

@@ -11,9 +11,6 @@ const StudentDash = () => {
     <>
       <h1>Student Dashboard</h1>
       <h2>Welcome, {user.first_name}!</h2>
-      <Link to='/profile'>
-        <img src="/src/assets/profile.gif" style={{ width: "30px", textAlign: "right", marginLeft: "350px" }} alt="profile icon" />
-      </Link>
       <summary style={{ display: "flex", alignItems: "center", justifyContent: "space-around", margin: "20px 0px" }}>
         <button>
           <Link to='/student-courses'>Student Courses</Link>
