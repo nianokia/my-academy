@@ -1,12 +1,19 @@
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { BackButton } from "../constants/constants";
+import AddCourse from "./AddCourse";
+import Modal from "./Modal";
 import { fetchUserCourses } from "../api/course";
 
 const InstructorCourses = ({ userId }) => {
   const [courses, setCourses] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useContext(AuthContext);
+
+  // --- Close modal ---
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   // --- Define the API route using the environment variable ---
   const tableRoute = `${import.meta.env.VITE_DOMAIN}/api/courses`;
@@ -34,6 +41,9 @@ const InstructorCourses = ({ userId }) => {
     <>
       <BackButton />
       <h1>My Courses</h1>
+      <button className="addCourseBtn" onClick={() => setIsModalOpen(true)}>
+        + COURSE
+      </button>
       <ul style={{ textAlign: 'start' }}>
         {courses.map((course) => (
           <li key={course.id} value={course.id}>
@@ -47,6 +57,11 @@ const InstructorCourses = ({ userId }) => {
       </ul>
       {/* --- Display "No users found" if there are no courses corresponding to instructor --- */}
       {courses.length === 0 && <p>No courses found.</p>}
+
+      {/* -------- ADD COURSE MODAL -------- */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <AddCourse onSuccess={handleCloseModal} />
+      </Modal>
     </>
   );
 };
