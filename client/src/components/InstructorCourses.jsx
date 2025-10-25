@@ -55,6 +55,7 @@ const InstructorCourses = ({ userId }) => {
           </li>
         ))}
       </ul>
+      <h4 style={{ textAlign: 'start', color: 'cornflowerblue', marginLeft: '30px' }}>(Total Courses: {courses.length})</h4>
       {/* --- Display "No users found" if there are no courses corresponding to instructor --- */}
       {courses.length === 0 && <p>No courses found.</p>}
 
