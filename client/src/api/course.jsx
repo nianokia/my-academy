@@ -7,9 +7,8 @@ console.log('COURSE API URL:', API_URL);
 // ------------ GET OPERATIONS ------------
 // -------- FETCH ALL COURSES --------
 export const fetchCourses = async (token) => {
-    const res = await axios.get(API_URL, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const res = await axios.get(API_URL, { headers });
     return res.data;
 };
 
