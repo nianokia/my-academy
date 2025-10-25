@@ -15,14 +15,28 @@ export const getAllCourses = async (req, res) => {
 
 // // -------- GET ALL USER COURSES --------
 export const getUserCourses = async (req, res) => {
-   try {
-    const userId = req.user.userId;
-    const courses = await Course.findAll({ where: { created_by: userId }});
-    res.status(200).json(courses);
-   } catch (err) {
-    res.status(500).json({ message: 'Error getting all user\'s courses', error: err.message });
+    try {
+        const userId = req.user.userId;
+        const courses = await Course.findAll({ where: { created_by: userId }});
+        res.status(200).json(courses);
+    } catch (err) {
+        res.status(500).json({ message: 'Error getting all user\'s courses', error: err.message });
    }
 };
+
+// -------- GET SINGLE COURSE BY ID --------
+export const getCourseById = async (req, res) => {
+    try {
+        // --- find course by ID from the URL ---
+        const { courseId } = req.params;
+        const course = await Course.findByPk(courseId);
+        
+        if (!course) return res.status(404).json({ message: "Course not found" });
+        res.status(200).json(course);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching course details", error: err.message });
+    }
+}
 
 
 // ------------ CREATE OPERATIONS ------------
