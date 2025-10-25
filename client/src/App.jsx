@@ -11,6 +11,7 @@ import InstructorDash from './pages/InstructorDash.jsx'
 import UserProfile from './pages/UserProfile.jsx'
 import UserTable from './pages/UserTable.jsx'
 import StudentCourses from './pages/StudentCourses.jsx'
+import InstructorCourses from './components/InstructorCourses.jsx'
 import StudentGrades from './pages/StudentGrades.jsx'
 import LoginPage from './pages/Login.jsx'
 import AllCourses from './pages/AllCourses.jsx'
@@ -39,12 +40,12 @@ import './App.css'
 //    - ⚠️ Input Validation ––> Comprehensive validation for all fields
 //    - ✅ Duplicate Prevention ––> Prevents duplicate student IDs  
 // - Course Management & Enrollment
-//    - ❌ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
+//    - ✅ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
 //    - ❌ Update Course Information ––> Modify existing course details
-//    - ❌ View Course Details ––> Display all courses in a sortable table
+//    - ⚠️ View Course Details ––> Display all courses in a sortable table
 //    - ❌ Delete Courses ––> Remove course records with confirmation
-//    - ❌ Set Prerequisites ––> Define prerequisite courses required for enrollment
-//    - ❌ Enrollment Limits ––> Set maximum number of students per course
+//    - ⚠️ Set Prerequisites ––> Define prerequisite courses required for enrollment
+//    - ⚠️ Enrollment Limits ––> Set maximum number of students per course
 //    - ❌ Available Seats ––> Track and display available seats for each course
 //    - ❌ Course Selection ––> Dropdown menu for selecting available courses
 //    - ❌ Student Lists ––> Separate lists for available and enrolled students
@@ -116,6 +117,7 @@ const App = () => {
         <Route path='/profile' element={<UserProfile />} />
         <Route path='/users' element={<UserTable />} />
         <Route path='/student-courses' element={<StudentCourses />} />
+        <Route path='/instructor-courses' element={<InstructorCourses />} />
         <Route path='/student-grades' element={<StudentGrades />} />
         <Route path='/courses' element={<AllCourses />} />
       </Routes>

@@ -7,12 +7,12 @@ import Modal from "../components/Modal.jsx";
 import { Link } from "react-router";
 
 // - Course Management & Enrollment
-//    - ❌ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
+//    - ✅ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
 //    - ❌ Update Course Information ––> Modify existing course details
 //    - ⚠️ View Course Details ––> Display all courses in a sortable table
 //    - ❌ Delete Courses ––> Remove course records with confirmation
-//    - ❌ Set Prerequisites ––> Define prerequisite courses required for enrollment
-//    - ❌ Enrollment Limits ––> Set maximum number of students per course
+//    - ⚠️ Set Prerequisites ––> Define prerequisite courses required for enrollment
+//    - ⚠️ Enrollment Limits ––> Set maximum number of students per course
 //    - ❌ Available Seats ––> Track and display available seats for each course
 //    - ❌ Course Selection ––> Dropdown menu for selecting available courses
 //    - ❌ Student Lists ––> Separate lists for available and enrolled students
@@ -45,7 +45,7 @@ const InstructorDash = () => {
             <li>Sort & Filter Courses</li>
           </ul>
         </li>
-        <li><button>My Courses</button>
+        <li><button><Link to='/instructor-courses'>My Courses</Link></button>
           <ul>
             <li>(+) New Course</li>
             <li>List All Instructor's Courses</li>
