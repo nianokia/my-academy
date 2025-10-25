@@ -7,16 +7,23 @@ console.log('COURSE API URL:', API_URL);
 // ------------ GET OPERATIONS ------------
 // -------- FETCH ALL COURSES --------
 export const fetchCourses = async (token) => {
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const res = await axios.get(API_URL, { headers });
-    return res.data;
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const res = await axios.get(API_URL, { headers });
+  return res.data;
 };
+
+// -------- FETCH USER'S COURSES --------
+export const fetchUserCourses = async (userId, token) => {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const res = await axios.get(`${API_URL}/instructor/${userId}`, { headers });
+  return res.data;
+}
 
 // ------------ POST OPERATIONS ------------
 // -------- CREATE COURSE --------
 export const createCourse = async (courseData, token) => {
-    const res = await axios.post(API_URL, courseData, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-    return res.data;
+  const res = await axios.post(API_URL, courseData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
 };
