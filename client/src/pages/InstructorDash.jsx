@@ -35,10 +35,8 @@ const InstructorDash = () => {
     <>
       <h1>Instructor Dashboard</h1>
       <h2>Welcome, {user.first_name}!</h2>
+      <button className="addCourseBtn" onClick={() => setIsModalOpen(true)}>+ New Course</button>
       <ul style={{ textAlign: 'start' }}>
-        <li>
-          <button onClick={() => setIsModalOpen(true)}>Add (+) New Course</button>
-        </li>
         <li>
           <button><Link to='/courses'>All Courses List</Link></button>
           <ul>
@@ -47,8 +45,6 @@ const InstructorDash = () => {
         </li>
         <li><button><Link to='/instructor-courses'>My Courses</Link></button>
           <ul>
-            <li>(+) New Course</li>
-            <li>List All Instructor's Courses</li>
             <li><button>View Course</button>
               <ul>
                 <li><button>Update Course</button>
