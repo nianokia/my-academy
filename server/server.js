@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
 
 // -------- DEFINE VARIABLES --------
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.static(path.join(clientDistPath)));
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/courses', courseRoutes);
 
 // -------- DEFINE ROUTES --------
 
