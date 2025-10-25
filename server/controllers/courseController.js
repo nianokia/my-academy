@@ -6,10 +6,17 @@ import Prerequisite from "../models/Prerequisite.js";
 // // -------- GET ALL COURSES --------
 export const getAllCourses = async (req, res) => {
     try {
-        const courses = await Course.findAll({
-            // --- fetch additional info from User model ---
-            include: [{ model: User, as: "creator", attributes: ["id", "name", "email"] }],
-        });
+        // const userId = req.user.userId;
+        // const user = await User.findByPk(userId, {
+        //     include: [{ model: Course, as: 'createdCourses' }],
+        // });
+
+        // if (!user) throw new Error("User is not associated to Course");
+        // const courses = await Course.findAll({
+        //     // --- fetch additional info from User model ---
+        //     include: [{ model: User, as: "creator", attributes: ["id", "name", "email"] }],
+        // });
+        const courses = await Course.findAll();
         res.status(200).json(courses);
     } catch (err) {
         res.status(500).json({ message: 'Error getting all courses', error: err.message });
