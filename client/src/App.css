@@ -231,3 +231,12 @@
   text-align: start;
   width: 50%;
 }
+
+.addCourseBtn {
+  position: relative;
+  top: -5px;
+  right: -170px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+}
