@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import AuthContext from "../context/AuthContext.jsx";
+import AddCourse from "../components/AddCourse.jsx";
+import Modal from "../components/Modal.jsx";
 
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
 import { Link } from "react-router";
@@ -22,13 +24,21 @@ import { Link } from "react-router";
 
 const InstructorDash = () => {
   const { user, logout } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // --- Close modal ---
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
       <h1>Instructor Dashboard</h1>
       <h2>Welcome, {user.first_name}!</h2>
       <ul style={{ textAlign: 'start' }}>
-        <li><button>Add (+) New Course</button></li>
+        <li>
+          <button onClick={() => setIsModalOpen(true)}>Add (+) New Course</button>
+        </li>
         <li>
           <button><Link to='/courses'>All Courses List</Link></button>
           <ul>
@@ -79,6 +89,11 @@ const InstructorDash = () => {
       </button>
       <br />
       <button className="routeBtn" onClick={logout}>Log Out</button>
+
+      {/* -------- ADD COURSE MODAL -------- */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <AddCourse onSuccess={handleCloseModal} />
+      </Modal>
     </>
   );
 };

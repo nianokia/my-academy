@@ -213,10 +213,21 @@
   flex-direction: column;
   gap: 1rem;
   margin: 0 auto;
-  /* margin: 2rem auto; */
+  margin-bottom: 10px;
   width: 80%;
-  padding: 50px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid cornflowerblue;
-  border-radius: 10px;
+}
+
+.AddCourseForm h2 {
+  font-size: 1.85rem;
+  margin: 10px 15px;
+}
+
+.AddCourseForm .formGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.AddCourseForm .formGroup label, input{
+  text-align: start;
+  width: 50%;
 }

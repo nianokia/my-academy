@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchCourses, createCourse } from "../api/course";
 
-const AddCourse = () => {
+const AddCourse = ({ onSuccess }) => {
   const [courses, setCourses] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -56,6 +56,10 @@ const AddCourse = () => {
     try {
       const response = await createCourse(formData, token);
       console.log("createCourse response:", response);
+      alert("Course has been added!")
+      
+      if (onSuccess) onSuccess();
+
       if (!response) throw new Error("Failed to create course");
     } catch (err) {
       console.error("Error creating course: ", err?.response ?? err);
@@ -66,16 +70,21 @@ const AddCourse = () => {
   console.log("Form Data: ", formData);
 
   return (
-    <form onSubmit={handleSubmit} className="AddCourseForm" >
-      <label htmlFor="title">Course Title</label>
-      <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Title" required />
+    <form onSubmit={handleSubmit} className="AddCourseForm">
+      <h2>Add Course Form</h2>
+      <div className="formGroup">
+        <label htmlFor="title">Course Title</label>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Course Title" required />
+      </div>
+      <div className="formGroup">
+        <label htmlFor="credits">Credits</label>
+        <input type="number" name="credits" value={formData.credits} min={1} onChange={handleChange} placeholder="Credits" required />
+      </div>
+      <div className="formGroup">
+        <label htmlFor="enrollment_limit">Enrollment Limit</label>
+        <input type="number" name="enrollment_limit" value={formData.enrollment_limit} min={1} onChange={handleChange} placeholder="Enrollment Limit" required />
+      </div>
 
-      <label htmlFor="credits">Credits</label>
-      <input type="number" name="credits" value={formData.credits} min={1} onChange={handleChange} placeholder="Credits" required />
-
-      <label htmlFor="enrollment_limit">Enrollment Limit</label>
-      <input type="number" name="enrollment_limit" value={formData.enrollment_limit} min={1} onChange={handleChange} placeholder="Enrollment Limit" required />
-      
       <label htmlFor="prerequisites">Prerequisites</label>
       <select
         multiple
