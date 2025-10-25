@@ -1,0 +1,14 @@
+import { useNavigate } from "react-router";
+
+export const BackButton = () => {
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  return (
+    <button onClick={handleBack} className="backBtn">
+      <img src="/src/assets/back.svg" alt="Left Arrow signifying a back button" />
+    </button>
+  )
+}
