@@ -4,11 +4,13 @@ import { BackButton } from "../constants/constants";
 import AddCourse from "./AddCourse";
 import Modal from "./Modal";
 import { fetchUserCourses } from "../api/course";
+import { useNavigate } from "react-router";
 
 const InstructorCourses = ({ userId }) => {
   const [courses, setCourses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // --- Close modal ---
   const handleCloseModal = () => {
@@ -44,9 +46,9 @@ const InstructorCourses = ({ userId }) => {
       <button className="addCourseBtn" onClick={() => setIsModalOpen(true)}>
         + COURSE
       </button>
-      <ul style={{ textAlign: 'start' }}>
+      <ul className='courseList'>
         {courses.map((course) => (
-          <li key={course.id} value={course.id}>
+          <li key={course.id} value={course.id} className="singleCourse" onClick={() => navigate(`/courses/${course.id}`)}>
             <strong>{course.name}</strong>
             <ul>
               <li>Credits: {course.credits}</li>
