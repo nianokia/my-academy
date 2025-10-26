@@ -2,19 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../db/dbConfig.js';
 import 'dotenv/config';
 
-// // -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
-// async function testDBConnection() {
-//     try {
-//         await sequelize.authenticate();
-//         console.log('Database connection successful.');
-//     } catch (err) {
-//         console.error('Unable to connect to the database:', 
-//             { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
-//             throw err;
-//     }
-// }
-// testDBConnection();
-
 // -------- DEFINE ENROLLMENT MODEL --------
 const Enrollment = sequelize.define('Enrollment', {
     id: {
@@ -26,11 +13,13 @@ const Enrollment = sequelize.define('Enrollment', {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        references: { model: 'users', key: 'id' },
     },
     course_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        references: { model: 'courses', key: 'id' },
     },
     status: {
         type: DataTypes.ENUM('enrolled', 'unenrolled'),
