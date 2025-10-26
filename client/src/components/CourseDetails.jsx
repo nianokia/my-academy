@@ -56,25 +56,14 @@ const CourseDetails = () => {
           </li>
         </ul>
       )}
+      
       {/* -------- EDIT COURSE MODAL -------- */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {/* --- Render the appropriate registration form based on the selected role --- */}
-        <EditCourse setIsModalOpen={setIsModalOpen} />
+        <EditCourse courseId={courseId} setIsModalOpen={setIsModalOpen} />
       </Modal>
     </>
   );
 };
 
 export default CourseDetails;
-
-{/* <ul className='courseList'>
-  {courses.map((course) => (
-    <li key={course.id} value={course.id} className="singleCourse" onClick={() => navigate(`/courses/${course.id}`)}>
-      <strong>{course.name}</strong>
-      <ul>
-        <li>Credits: {course.credits}</li>
-        <li>Enrollment Limit: {course.enrollment_limit}</li>
-      </ul>
-    </li>
-  ))}
-</ul> */}
