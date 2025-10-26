@@ -5,8 +5,8 @@ import Enrollment from "./Enrollment.js";
 Course.belongsTo(User, { foreignKey: "created_by", as: "instructor" });
 User.hasMany(Course, { foreignKey: "created_by", as: "courses" });
 
-Course.belongsToMany(User, { through: Enrollment, as: "students", foreignKey: "course_id" });
-User.belongsToMany(Course, { through: Enrollment, as: "enrolledCourses", foreignKey: "user_id" });
+Course.belongsToMany(User, { through: Enrollment, as: "students", foreignKey: "course_id", otherKey: "student_id" });
+User.belongsToMany(Course, { through: Enrollment, as: "enrolledCourses", foreignKey: "student_id", otherKey: "course_id" });
 
 export { User, Course, Enrollment };
 
