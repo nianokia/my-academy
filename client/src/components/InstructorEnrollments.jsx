@@ -2,12 +2,32 @@ import { useEffect, useState, useContext } from "react";
 import { fetchEnrolledStudents, enrollStudents, unenrollStudent } from "../api/enrollment";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
+import ConfirmModal from "./ConfirmModal";
 
 const InstructorEnrollments = ({ courseId }) => {
   const { token } = useContext(AuthContext);
   const [students, setStudents] = useState([]);
   const [enrolled, setEnrolled] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false);
+
+  // const getStudent = async () => {
+  //   try {
+  //     const allUsers = await fetchUsers(token);
+  //     setStudent(allUsers.find(user => user.id === ));
+
+  //     console.log("Student Details: ", data);
+  //   } catch (err) {
+  //     console.error("Error fetching student details: ", err);
+  //   }
+  // };
+
+  // // --- Call getStudent whenever id or token changes ---
+  // useEffect(() => {
+  //   getStudent();
+  // }, [studentId, token]);
+
 
   // -------- FETCH STUDENTS --------
   const fetchStudents = async () => {
@@ -39,16 +59,28 @@ const InstructorEnrollments = ({ courseId }) => {
     fetchStudents();
   };
 
-  const handleUnenroll = async (studentId) => {
-    await unenrollStudent(courseId, studentId, token);
-    alert("Student unenrolled succesfully.");
-    fetchStudents();
+  const handleUnenroll = async () => {
+    try {
+      await unenrollStudent(courseId, selectedStudent.id, token);
+      alert(`${selectedStudent.first_name} ${selectedStudent.last_name} has been unenrolled.`);
+      
+      // --- refresh student lists ---
+      fetchStudents();
+    } catch (err) {
+      console.error("Error unenrolling student: ", err);
+      alert(`Failed to unenroll ${selectedStudent.first_name} ${selectedStudent.last_name}. Please try again.`);
+    }
   };
 
   const toggleSelection = (id) => {
     // --- if previous includes specified student.id then append it to the selected array, if not filter it out ---
     setSelected((prev) => prev.includes(id) ? prev.filter(selected => selected !== id) : [...prev, id]);
   }
+
+  const openUnenrollModal = (student) => {
+    setSelectedStudent(student);
+    setIsUnenrollModalOpen(true);
+  };
 
   console.log("Selected: ", selected);
 
@@ -60,7 +92,7 @@ const InstructorEnrollments = ({ courseId }) => {
         {enrolled.map(student => (
           <li key={student.id}>
             {student.first_name} {student.last_name}
-            <button onClick={() => handleUnenroll(student.id)}>Unenroll</button>
+            <button onClick={() => openUnenrollModal(student)}>Unenroll</button>
           </li>
         ))}
       </ul>
@@ -78,6 +110,16 @@ const InstructorEnrollments = ({ courseId }) => {
       {selected.length > 0 && (
         <button onClick={handleEnroll}>ENROLL</button>
       )}
+
+      <ConfirmModal
+        isOpen={isUnenrollModalOpen}
+        onClose={() => setIsUnenrollModalOpen(false)}
+        onConfirm={handleUnenroll}
+        title={`Unenroll ${selectedStudent?.first_name} ${selectedStudent?.last_name}?`}
+        message={`Are you sure you want to unenroll ${selectedStudent?.first_name} ${selectedStudent?.last_name} from this course?`}
+        confirmText="Yes, Unenroll"
+      />
+
     </div>
   )
 };
