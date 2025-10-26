@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/:courseId/students', verifyToken, getEnrolledStudents);
 router.post('/:courseId/enroll', verifyToken, enrollStudents)
-router.delete("/:courseId/unenroll/", verifyToken, unenrollStudents);
+router.delete("/:courseId/unenroll", verifyToken, unenrollStudents);
 
 export default router;
