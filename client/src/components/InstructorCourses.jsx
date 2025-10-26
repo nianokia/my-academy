@@ -46,20 +46,24 @@ const InstructorCourses = ({ userId }) => {
       <button className="addCourseBtn" onClick={() => setIsModalOpen(true)}>
         + COURSE
       </button>
-      <ul className='courseList'>
-        {courses.map((course) => (
-          <li key={course.id} value={course.id} className="singleCourse" onClick={() => navigate(`/courses/${course.id}`)}>
-            <strong>{course.name}</strong>
-            <ul>
-              <li>Credits: {course.credits}</li>
-              <li>Enrollment Limit: {course.enrollment_limit}</li>
-            </ul>
-          </li>
-        ))}
-      </ul>
-      <h4 style={{ textAlign: 'start', color: 'cornflowerblue', marginLeft: '30px' }}>(Total Courses: {courses.length})</h4>
-      {/* --- Display "No users found" if there are no courses corresponding to instructor --- */}
-      {courses.length === 0 && <p>No courses found.</p>}
+      {courses.length > 0 ? (
+        <>
+          <ul className='courseList'>
+            {courses.map((course) => (
+              <li key={course.id} value={course.id} className="singleCourse" onClick={() => navigate(`/courses/${course.id}`)}>
+                <strong>{course.name}</strong>
+                <ul>
+                  <li>Credits: {course.credits}</li>
+                  <li>Enrollment Limit: {course.enrollment_limit}</li>
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <h4 style={{ textAlign: 'start', color: 'cornflowerblue', marginLeft: '30px' }}>(Total Courses: {courses.length})</h4>
+        </>
+      ) : (
+        <p>No courses found.</p>
+      )}
 
       {/* -------- ADD COURSE MODAL -------- */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
