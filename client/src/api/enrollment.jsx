@@ -24,3 +24,14 @@ export const enrollStudents = async (courseId, studentIds, token) => {
   );
   return res.data;
 };
+
+// ------------ DELETE OPERATIONS ------------
+// -------- UNENROLL STUDENTS --------
+export const unenrollStudent = async (courseId, studentIds, token) => {
+  const res = await axios.post(
+    `${API_URL}/${courseId}/unenroll`,
+    { studentIds },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+};
