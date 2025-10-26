@@ -4,6 +4,7 @@ import axios from "axios";
 const API_URL = `${import.meta.env.VITE_DOMAIN}/api/courses`;
 console.log('COURSE API URL:', API_URL);
 
+
 // ------------ GET OPERATIONS ------------
 // -------- FETCH ALL COURSES --------
 export const fetchCourses = async (token) => {
@@ -37,10 +38,21 @@ export const createCourse = async (courseData, token) => {
   return res.data;
 };
 
+
 // ------------ PUT OPERATIONS ------------
-// // -------- UPDATE A COURSE --------
+// // -------- UPDATE COURSE --------
 export const updateCourse = async (courseId, updatedData, token) => {
   const res = await axios.put(`${API_URL}/${courseId}`, updatedData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
+
+// ------------ DELETE OPERATIONS ------------
+// // -------- DELETE A COURSE --------
+export const deleteCourse = async (courseId, token) => {
+  const res = await axios.delete(`${API_URL}/${courseId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
