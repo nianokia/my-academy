@@ -103,3 +103,17 @@ export const updateCourse = async (req, res) => {
 
 
 // ------------ DELETE OPERATIONS ------------
+// // -------- DELETE A COURSE --------
+export const deleteCourse = async (req, res) => {
+    const { courseId } = req.params;
+    try {
+        const course = await Course.findByPk(courseId);
+        if (!course) return res.status(404).json({ message: "Course not found" });
+
+        // --- delete course ---
+        await course.destroy();
+        res.status(200).json({ message: "Course deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Error deleting course", error: err.message });
+    }
+};
