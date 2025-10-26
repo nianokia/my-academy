@@ -18,11 +18,11 @@ export default function StudentRegister({ onSuccess }) {
       const res = await registerUser(formData);
       console.log('--- Register Response ---', res.data);
 
-      const { user } = res.data;
+      const { user, token } = res.data;
       alert('Registered successfully!');
 
       // --- Call onSuccess callback with user role if it exists ---
-      if (onSuccess) onSuccess(user.role);
+      if (onSuccess) onSuccess(user, token, user.role);
     } catch (err) {
       alert(err.response?.data?.error || 'Error occurred');
       console.error('--- Err: ', err, 'Err.response: ',err.response, 'Err.response?.data: ', err.response?.data, 'Err.response?.data?.error: ', err.response?.data?.error, '---');
