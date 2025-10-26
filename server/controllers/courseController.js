@@ -30,7 +30,7 @@ export const getCourseById = async (req, res) => {
         // --- find course by ID from the URL ---
         const { courseId } = req.params;
         const course = await Course.findByPk(courseId);
-        
+
         if (!course) return res.status(404).json({ message: "Course not found" });
         res.status(200).json(course);
     } catch (err) {
@@ -78,6 +78,28 @@ export const createCourse = async (req, res) => {
 
 
 // ------------ UPDATE OPERATIONS ------------
+// // -------- UPDATE A COURSE --------
+export const updateCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const { name, credits, enrollment_limit } = req.body;
+    try {
+        const course = await Course.findByPk(courseId);
+        if (!course) return res.status(404).json({ message: "Course not found" });
+
+        // --- Update user fields ---
+        await course.update({
+            name: name || course.name,
+            credits: credits || course.credits,
+            enrollment_limit: enrollment_limit || course.enrollment_limit,
+        });
+
+        // --- Get plain JS object ---
+        const updatedCourse = course.get({ plain: true });
+        res.status(200).json({ message: 'User updated successfully: ', course: updatedCourse });
+    } catch (err) {
+        res.status(500).json({ message: "Error updating course", error: err.message });
+    }
+};
 
 
 // ------------ DELETE OPERATIONS ------------
