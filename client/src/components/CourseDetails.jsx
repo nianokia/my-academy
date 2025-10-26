@@ -6,6 +6,7 @@ import AuthContext from "../context/AuthContext";
 import EditCourse from "./EditCourse";
 import Modal from "./Modal";
 import ConfirmModal from "./ConfirmModal";
+import InstructorEnrollments from "./InstructorEnrollments";
 
 const CourseDetails = () => {
   const [course, setCourse] = useState(null);
@@ -52,28 +53,33 @@ const CourseDetails = () => {
   };
 
   return (
-    <>
+    <div className="CourseDetails">
       <BackButton />
-      <h1>Course Details</h1>
+      <header>
+        <button className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</button>
+        <h1>{course.name}</h1>
+      </header>
       {!course ? (
         <p>Course not found.</p>
       ) : (
         <>
           <ul className='courseList'>
-            <li key={course.id} value={course.id} className="singleCourse">
-              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0.5rem auto' }}>
-                <h3 style={{ margin: '0' }}>{course.name}</h3>
-                <button className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</button>
-              </div>
+            <li key={course.id} value={course.id} className="singleCourse">              
               <ul>
                 <li>ID: {course.id}</li>
                 <li>Credits: {course.credits}</li>
-                <li>Enrollment Limit: {course.enrollment_limit}</li>
+                <li>Enrollment Limit: {course.enrollment_limit}
+                  <ul>
+                    <li>Currently Enrolled: {course.enrolled_count}</li>
+                    <li>Seats Available: {course.seats_available}</li>
+                  </ul>
+                </li>
                 <li>Created by: {course.created_by}</li>
                 <li>Created at: {course.created_at}</li>
               </ul>
             </li>
           </ul>
+          <InstructorEnrollments courseId={courseId} />
           <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete Course</button>
           <ConfirmModal 
             isOpen={isDeleteModalOpen}
@@ -92,7 +98,7 @@ const CourseDetails = () => {
         {/* --- Render the appropriate registration form based on the selected role --- */}
         <EditCourse courseId={courseId} setIsModalOpen={setIsModalOpen} />
       </Modal>
-    </>
+    </div>
   );
 };
 
