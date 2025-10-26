@@ -22,9 +22,8 @@ export const fetchUserCourses = async (userId, token) => {
 
 // -------- FETCH SINGLE COURSE DETAILS --------
 export const fetchCourseById = async (courseId, token) => {
-  const res = await axios.get(`${API_URL}/${courseId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const res = await axios.get(`${API_URL}/${courseId}`, { headers });
   return res.data;
 };
 
