@@ -36,3 +36,12 @@ export const createCourse = async (courseData, token) => {
   });
   return res.data;
 };
+
+// ------------ PUT OPERATIONS ------------
+// // -------- UPDATE A COURSE --------
+export const updateCourse = async (courseId, updatedData, token) => {
+  const res = await axios.put(`${API_URL}/${courseId}`, updatedData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
