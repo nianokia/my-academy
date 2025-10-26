@@ -26,12 +26,10 @@ export const enrollStudents = async (courseId, studentIds, token) => {
 };
 
 // ------------ DELETE OPERATIONS ------------
-// -------- UNENROLL STUDENTS --------
-export const unenrollStudents = async (courseId, studentIds, token) => {
-  const res = await axios.post(
-    `${API_URL}/${courseId}/unenroll`,
-    { studentIds },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
+// -------- UNENROLL STUDENT --------
+export const unenrollStudent = async (courseId, studentId, token) => {
+  const res = await axios.delete(`${API_URL}/${courseId}/unenroll/${studentId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data;
 };
