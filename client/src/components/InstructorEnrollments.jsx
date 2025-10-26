@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { fetchEnrolledStudents, enrollStudents } from "../api/enrollment";
+import { fetchEnrolledStudents, enrollStudents, unenrollStudent } from "../api/enrollment";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
 
@@ -39,6 +39,12 @@ const InstructorEnrollments = ({ courseId }) => {
     fetchStudents();
   };
 
+  const handleUnenroll = async (studentId) => {
+    await unenrollStudent(courseId, studentId, token);
+    alert("Student unenrolled succesfully.");
+    fetchStudents();
+  };
+
   const toggleSelection = (id) => {
     // --- if previous includes specified student.id then append it to the selected array, if not filter it out ---
     setSelected((prev) => prev.includes(id) ? prev.filter(selected => selected !== id) : [...prev, id]);
@@ -54,6 +60,7 @@ const InstructorEnrollments = ({ courseId }) => {
         {enrolled.map(student => (
           <li key={student.id}>
             {student.first_name} {student.last_name}
+            <button onClick={() => handleUnenroll(student.id)}>Unenroll</button>
           </li>
         ))}
       </ul>
