@@ -2,19 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../db/dbConfig.js';
 import 'dotenv/config';
 
-// // -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
-// async function testDBConnection() {
-//     try {
-//         await sequelize.authenticate();
-//         console.log('Database connection successful.');
-//     } catch (err) {
-//         console.error('Unable to connect to the database:', 
-//             { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
-//             throw err;
-//     }
-// }
-// testDBConnection();
-
 // -------- DEFINE USER MODEL --------
 const User = sequelize.define('User', {
     id: {
@@ -55,18 +42,6 @@ const User = sequelize.define('User', {
     updatedAt: 'updated_at',
 });
 
-// // --- a user can haave many courses through created_by ---
-// User.hasMany(Course, {
-//     foreignKey: "created_by",
-//     as: "creator",
-// });
-
-// // --- a user can belong to many courses through enrollments ---
-// User.belongsToMany(Course, {
-//     through: 'Enrollments',
-//     as: 'courses',
-//     foreignKey: 'user_id'
-// });
 
 // -------- SYNC USER MODEL & TABLE --------
 User.sync().then((data) => {
