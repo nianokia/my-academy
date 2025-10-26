@@ -1,24 +1,19 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/dbConfig.js';
 import 'dotenv/config';
 
-// -------- INITIALIZE Sequelize & CONNECT with database --------
-const sequelize = new Sequelize(process.env.DATABASE_URI, {
-    dialect: 'postgres',
-    logging: false,
-});
-
-// -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
-async function testDBConnection() {
-    try {
-        await sequelize.authenticate();
-        console.log('Database connection successful.');
-    } catch (err) {
-        console.error('Unable to connect to the database:', 
-            { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
-            throw err;
-    }
-}
-testDBConnection();
+// // -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
+// async function testDBConnection() {
+//     try {
+//         await sequelize.authenticate();
+//         console.log('Database connection successful.');
+//     } catch (err) {
+//         console.error('Unable to connect to the database:', 
+//             { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
+//             throw err;
+//     }
+// }
+// testDBConnection();
 
 // -------- DEFINE COURSE MODEL --------
 const Course = sequelize.define('Course', {
@@ -50,6 +45,18 @@ const Course = sequelize.define('Course', {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
 });
+
+// Course.belongsTo(User, {
+//     foreignKey: "created_by",
+//     as: "creator",
+// });
+
+// --- a course can belong to many students through enrollments ---
+// Course.belongsToMany(User, {
+//     through: 'Enrollments',
+//     as: 'students',
+//     foreignKey: 'course_id'
+// });
 
 // -------- SYNC COURSE MODEL & TABLE --------
 Course.sync().then((data) => {
