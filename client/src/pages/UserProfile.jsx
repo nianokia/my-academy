@@ -3,11 +3,13 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import AuthContext from "../context/AuthContext.jsx";
 import Modal from "../components/Modal.jsx";
+import ConfirmModal from "../components/ConfirmModal.jsx";
 import EditProfile from "../components/EditProfile.jsx";
 import { deleteUser } from "../api/user";
 
 const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
   const { user, token, loading, logout } = useContext(AuthContext);
   console.log('Current User:', user);
@@ -18,7 +20,7 @@ const UserProfile = () => {
   };
 
   const handleDelete = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     try {
       // const deletedUser = await deleteUser(user, token);
       await deleteUser(user.id, token);
@@ -80,11 +82,20 @@ const UserProfile = () => {
                   </li>
                 )}
               </ul>
+              <ConfirmModal 
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleDelete}
+                title={`${user.first_name}, are you sure you want to delete your account?`}
+                message={`This action cannot be undone.`}
+                confirmText="Yes, Delete"
+                cancelText="No, Cancel"
+              />
             </>
           )}
         </>
       )}
-      <button className="deleteUserBtn" onClick={handleDelete}>Delete User</button>
+      <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete User</button>
 
       {/* -------- MODAL FOR REGISTRATION -------- */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
