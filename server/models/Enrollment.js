@@ -23,6 +23,7 @@ const Enrollment = sequelize.define('Enrollment', {
     },
     status: {
         type: DataTypes.ENUM('enrolled', 'unenrolled'),
+        defaultValue: 'enrolled',
         allowNull: false,
     },
 }, {
