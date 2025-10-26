@@ -7,6 +7,8 @@ import User from './models/User.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
+import sequelize from "./db/dbConfig.js";
+import "./models/associations.js";
 
 // -------- DEFINE VARIABLES --------
 const app = express();
@@ -24,6 +26,20 @@ app.use(express.static(path.join(clientDistPath)));
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/courses', courseRoutes);
+
+// -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
+async function testDBConnection() {
+    try {
+        await sequelize.authenticate();
+        console.log('Database connection successful.');
+        await sequelize.sync({ alter: false });
+    } catch (err) {
+        console.error('Unable to connect or sync to the database:', 
+            { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
+            throw err;
+    }
+}
+testDBConnection();
 
 // -------- DEFINE ROUTES --------
 
