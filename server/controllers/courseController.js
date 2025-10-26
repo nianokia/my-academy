@@ -1,6 +1,7 @@
 import Course from "../models/Course.js";
 import User from "../models/User.js";
 import Prerequisite from "../models/Prerequisite.js";
+import Enrollment from "../models/Enrollment.js";
 
 // ------------ READ OPERATIONS ------------
 // // -------- GET ALL COURSES --------
@@ -29,11 +30,32 @@ export const getCourseById = async (req, res) => {
     try {
         // --- find course by ID from the URL ---
         const { courseId } = req.params;
-        const course = await Course.findByPk(courseId);
+        // --- collect all course data including prereq info ---
+        const course = await Course.findByPk(courseId, {
+            include: [{
+                association: "prerequisites",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+            }],
+        });
 
         if (!course) return res.status(404).json({ message: "Course not found" });
-        res.status(200).json(course);
+
+        // --- count enrolled students ---
+        const enrolledCount = await Enrollment.count({
+            where: { course_id: courseId, status: "enrolled" },
+        });
+
+        // --- add seat availability & enrolledCount to course response ---
+        const allCourseData = {
+            ...course.toJSON(),
+            seats_available: course.enrollment_limit - enrolledCount,
+            enrolled_count: enrolledCount,
+        };
+
+        res.status(200).json(allCourseData);
     } catch (err) {
+        console.error("Error fetching course details", err);
         res.status(500).json({ message: "Error fetching course details", error: err.message });
     }
 }
