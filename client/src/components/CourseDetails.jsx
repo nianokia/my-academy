@@ -74,7 +74,7 @@ const CourseDetails = () => {
               </ul>
             </li>
           </ul>
-          <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete User</button>
+          <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete Course</button>
           <ConfirmModal 
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
