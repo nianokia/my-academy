@@ -13,3 +13,14 @@ export const fetchEnrolledStudents = async (courseId, token) => {
   });
   return res.data;
 };
+
+// ------------ CREATE OPERATIONS ------------
+// -------- ENROLL STUDENTS --------
+export const enrollStudents = async (courseId, studentIds, token) => {
+  const res = await axios.post(
+    `${API_URL}/${courseId}/enroll`,
+    { studentIds },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+};
