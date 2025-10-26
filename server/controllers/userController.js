@@ -1,6 +1,16 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 
+// -------- GET ALL USERS CONTROLLER --------
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ message: 'Error getting all users', error: err.message });
+    }
+};
+
 // -------- UPDATE USER CONTROLLER --------
 export const updateUser = async (req, res) => {
     const userId = req.params.id;
