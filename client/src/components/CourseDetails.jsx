@@ -5,10 +5,12 @@ import { fetchCourseById, deleteCourse } from "../api/course";
 import AuthContext from "../context/AuthContext";
 import EditCourse from "./EditCourse";
 import Modal from "./Modal";
+import ConfirmModal from "./ConfirmModal";
 
 const CourseDetails = () => {
   const [course, setCourse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   // --- get ID from the URL ---
   const { courseId } = useParams();
   const { token } = useContext(AuthContext);
@@ -30,12 +32,12 @@ const CourseDetails = () => {
   }, [courseId, token]);
 
   const handleDelete = async (event) => {
-    event.preventDefault();
     try {
       await deleteCourse(courseId, token);
-      alert(`${course.name} has been deleted successfully!`);
+      alert(`${course?.name ?? "Course"} has been deleted successfully!`);
       // console.log(`${deletedCourse.name} was successfully deleted \n ID: ${deletedCourse.id}`)
       
+      // setIsDeleteModalOpen(false);
       navigate(-1)
     } catch (err) {
       alert('Failed to delete course. Please try again.');
@@ -72,7 +74,16 @@ const CourseDetails = () => {
               </ul>
             </li>
           </ul>
-          <button className="deleteUserBtn" onClick={handleDelete}>Delete User</button>
+          <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete User</button>
+          <ConfirmModal 
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirm={handleDelete}
+            title={`Are you sure you want to delete "${course.name}"?`}
+            message={`This action will permanently delete (${course.name}) from the database.`}
+            confirmText="Yes, Delete"
+            cancelText="No, Cancel"
+          />
         </>
       )}
 
