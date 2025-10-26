@@ -14,7 +14,7 @@ export const getEnrolledStudents = async (req, res) => {
         if (!course) return res.status(404).json({ message: "Course not found" });
         res.status(200).json(course.students);
     } catch (err) {
-        console.error("Error: ", err);
+        console.error("Error fetching enrolled students: ", err);
         res.status(500).json({ message: "Error fetching enrolled students", error: err.message });
     }
 };
@@ -37,6 +37,7 @@ export const enrollStudents = async (req, res) => {
 
         res.status(200).json({ message: "Students enrolled successfully" });
     } catch (err) {
+        console.error("Error enrolling students: ", err);
         res.status(500).json({ message: "Error enrolling students", error: err.message });
     }
 };
