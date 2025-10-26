@@ -55,14 +55,14 @@ const CourseDetails = () => {
   return (
     <div className="CourseDetails">
       <BackButton />
-      <header>
-        <button className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</button>
-        <h1>{course.name}</h1>
-      </header>
       {!course ? (
         <p>Course not found.</p>
       ) : (
         <>
+          <header>
+            <button className="editProfileIcon" onClick={() => setIsModalOpen(true)}>✎</button>
+            <h1>{course.name}</h1>
+          </header>
           <ul className='courseList'>
             <li key={course.id} value={course.id} className="singleCourse">              
               <ul>
