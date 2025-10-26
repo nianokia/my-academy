@@ -1,36 +1,34 @@
 import User from "./User.js";
 import Course from "./Course.js";
 import Enrollment from "./Enrollment.js";
+import Prerequisite from "./Prerequisite.js";
 
+// --- Each course belongs to an instructor ---
 Course.belongsTo(User, { foreignKey: "created_by", as: "instructor" });
+
+// --- An instructor can have many courses ---
 User.hasMany(Course, { foreignKey: "created_by", as: "courses" });
 
+// --- A course can have multiple students ---
 Course.belongsToMany(User, { through: Enrollment, as: "students", foreignKey: "course_id", otherKey: "student_id" });
+
+// --- A student can have multiple courses ---
 User.belongsToMany(Course, { through: Enrollment, as: "enrolledCourses", foreignKey: "student_id", otherKey: "course_id" });
 
-export { User, Course, Enrollment };
+// --- A course can have multiple prerequisite courses ---
+Course.belongsToMany(Course, {
+  as: "prerequisites",
+  through: Prerequisite,
+  foreignKey: "course_id",
+  otherKey: "prerequisite_course_id",
+});
 
-// // --- a user can haave many courses through created_by ---
-// User.hasMany(Course, {
-//     foreignKey: "created_by",
-//     as: "creator",
-// });
+// --- A course can be a prerequisite for many other courses ---
+Course.belongsToMany(Course, {
+  as: "dependentCourses",
+  through: Prerequisite,
+  foreignKey: "prerequisite_course_id",
+  otherKey: "course_id",
+});
 
-// // --- a user can belong to many courses through enrollments ---
-// User.belongsToMany(Course, {
-//     through: 'Enrollments',
-//     as: 'courses',
-//     foreignKey: 'user_id'
-// });
-
-// Course.belongsTo(User, {
-//     foreignKey: "created_by",
-//     as: "creator",
-// });
-
-// // --- a course can belong to many students through enrollments ---
-// Course.belongsToMany(User, {
-//     through: 'Enrollments',
-//     as: 'students',
-//     foreignKey: 'course_id'
-// });
+export { User, Course, Enrollment, Prerequisite };
