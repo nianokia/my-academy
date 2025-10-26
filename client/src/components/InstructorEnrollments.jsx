@@ -12,23 +12,6 @@ const InstructorEnrollments = ({ courseId }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false);
 
-  // const getStudent = async () => {
-  //   try {
-  //     const allUsers = await fetchUsers(token);
-  //     setStudent(allUsers.find(user => user.id === ));
-
-  //     console.log("Student Details: ", data);
-  //   } catch (err) {
-  //     console.error("Error fetching student details: ", err);
-  //   }
-  // };
-
-  // // --- Call getStudent whenever id or token changes ---
-  // useEffect(() => {
-  //   getStudent();
-  // }, [studentId, token]);
-
-
   // -------- FETCH STUDENTS --------
   const fetchStudents = async () => {
     const allUsers = await fetchUsers(token);
@@ -53,10 +36,18 @@ const InstructorEnrollments = ({ courseId }) => {
 
   // -------- ENROLL STUDENTS --------
   const handleEnroll = async () => {
-    await enrollStudents(courseId, selected, token);
-    alert("Students enrolled succesfully");
-    setSelected([]);
-    fetchStudents();
+    try {
+      await enrollStudents(courseId, selected, token);
+      alert("Students enrolled succesfully");
+      setSelected([]);
+      fetchStudents();
+    } catch (err) {
+      if (err.response.status === 400) {
+        alert(err.response.data.message)
+      } else {
+        alert("Unexpected error enrolling students");
+      }
+    }
   };
 
   const handleUnenroll = async () => {
