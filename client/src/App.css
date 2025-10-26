@@ -133,6 +133,11 @@
   cursor: pointer;
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
 /* -------- FORM CSS -------- */
 
 .register-form {
