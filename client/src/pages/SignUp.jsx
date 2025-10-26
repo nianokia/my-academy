@@ -1,13 +1,15 @@
 // ------- IMPORTS --------
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import InstructorRegister from '../components/InstructorRegister';
 import StudentRegister from '../components/StudentRegister';
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router'
+import AuthContext from '../context/AuthContext';
 
 const SignUp = () => {
   const [role, setRole] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // --- Handle role selection & open modal on click ---
@@ -23,9 +25,11 @@ const SignUp = () => {
   };
 
   // --- Handle successful registration and redirect based on role ---
-  const handleSuccessfulRegistration = (role) => {
+  const handleSuccessfulRegistration = (user, token, role) => {
     setIsModalOpen(false);
     setRole('');
+    
+    login(user, token);
     navigate(role === 'student' ? '/student' : '/instructor');
   };
 
