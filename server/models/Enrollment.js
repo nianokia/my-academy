@@ -11,13 +11,13 @@ const Enrollment = sequelize.define('Enrollment', {
     },
     student_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         references: { model: 'users', key: 'id' },
     },
     course_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         references: { model: 'courses', key: 'id' },
     },

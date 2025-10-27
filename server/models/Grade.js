@@ -11,7 +11,6 @@ const Grade = sequelize.define('Grade', {
     },
     enrollment_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
     },
     grade: {
@@ -20,7 +19,6 @@ const Grade = sequelize.define('Grade', {
     },
     assigned_by: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: true,
     },
 }, {
