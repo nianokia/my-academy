@@ -11,6 +11,8 @@ const InstructorEnrollments = ({ courseId }) => {
   const [selected, setSelected] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false);
+  const [searchAvailable, setSearchAvailable] = useState('');
+  const [searchEnrolled, setSearchEnrolled] = useState('');
 
   // -------- FETCH STUDENTS --------
   const fetchStudents = async () => {
@@ -73,6 +75,21 @@ const InstructorEnrollments = ({ courseId }) => {
     setIsUnenrollModalOpen(true);
   };
 
+  // -------- FILTERED LISTS --------
+  // --- normalize full name and filter results based on matching search input ---
+  const filteredAvailable = students.filter(student =>
+    `${student.first_name} ${student.last_name}`
+      .toLowerCase()
+      .includes(searchAvailable.toLowerCase())
+  );
+
+  const filteredEnrolled = enrolled.filter(student =>
+    `${student.first_name} ${student.last_name}`
+      .toLowerCase()
+      .includes(searchEnrolled.toLowerCase())
+  );
+
+
   console.log("Selected: ", selected);
 
   return (
@@ -82,19 +99,33 @@ const InstructorEnrollments = ({ courseId }) => {
       <div className="enrollmentContainer flex">
         <div className="enrolledStudents halfWidth">
           <h3>Enrolled Students</h3>
+          {/* -------- SEARCH ENROLLED -------- */}
+          <input type="text" value={searchEnrolled}
+            onChange={(event) => setSearchEnrolled(event.target.value)}
+            placeholder="Search enrolled..."
+          />
+          {/* -------- ENROLLED RESULTS -------- */}
           <ul>
-            {enrolled.map(student => (
+            {filteredEnrolled.map((student) => (
               <li key={student.id}>
                 <span>{student.first_name} {student.last_name}</span>
                 <button onClick={() => openUnenrollModal(student)}>Unenroll</button>
               </li>
             ))}
+            {filteredEnrolled.length === 0 && <li className="noEnrolled">No students found</li>}
           </ul>
         </div>
+
         <div className="availableStudents halfWidth">
           <h3>Available Students</h3>
+          {/* -------- SEARCH AVAILABLE -------- */}
+          <input type="text" value={searchAvailable} className="availableSearch"
+            onChange={(event) => setSearchAvailable(event.target.value)}
+            placeholder="Search available..."
+          />
+          {/* -------- AVAILABLE RESULTS -------- */}
           <ul>
-            {students.map(student => (
+            {filteredAvailable.map((student) => (
               <li key={student.id}>
                 <label className="flex">
                   <input type="checkbox" 
@@ -105,7 +136,9 @@ const InstructorEnrollments = ({ courseId }) => {
                 </label>
               </li>
             ))}
+            {filteredAvailable.length === 0 && <li className="noneAvailable">No students found</li>}
           </ul>
+          {/* -------- CONDITIONAL ENROLL BUTTON -------- */}
           {selected.length > 0 && (
             <button className="enrollBtn" onClick={handleEnroll}>ENROLL</button>
           )}
