@@ -7,8 +7,29 @@ import Enrollment from "../models/Enrollment.js";
 // // -------- GET ALL COURSES --------
 export const getAllCourses = async (req, res) => {
     try {
-        const courses = await Course.findAll();
-        res.status(200).json(courses);
+        const courses = await Course.findAll({
+            include: [{
+                association: "prerequisites",
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+            }],
+        });
+
+        const detailedCourses = await Promise.all(
+            courses.map(async (course) => {
+                const enrolledCount = await Enrollment.count({
+                    where: { course_id: course.id, status: "enrolled" },
+                });
+
+                return {
+                    ...course.toJSON(),
+                    enrolled_count: enrolledCount,
+                    seats_available: course.enrollment_limit - enrolledCount,
+                };
+            })
+        );
+
+        res.status(200).json(detailedCourses);
     } catch (err) {
         res.status(500).json({ message: 'Error getting all courses', error: err.message });
     }
