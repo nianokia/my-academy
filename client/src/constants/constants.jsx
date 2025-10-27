@@ -14,6 +14,8 @@ export const BackButton = () => {
   )
 }
 
+export const gradeOptions = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
+
 // ----------- CALCULATE GPA --------
 export const calculateGPA = (grades) => {
   // --- if no grades then GPA is 0 automatically ---

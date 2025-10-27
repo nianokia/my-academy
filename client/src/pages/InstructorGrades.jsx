@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
 import { fetchStudentGrades, fetchGradeHistory, assignGrade } from "../api/grade";
-import { BackButton, calculateGPA, getGradeColor } from "../constants/constants";
+import { BackButton, gradeOptions, calculateGPA, getGradeColor } from "../constants/constants";
 import Modal from "../components/Modal";
 
 // - ✅ Grade Management
@@ -22,8 +22,6 @@ const InstructorGrades = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const gradeOptions = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
   // -------- FETCH ALL STUDENTS --------
   const fetchStudents = async () => {
