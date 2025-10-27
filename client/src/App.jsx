@@ -13,6 +13,7 @@ import UserTable from './pages/UserTable.jsx'
 import StudentCourses from './components/StudentCourses.jsx'
 import InstructorCourses from './components/InstructorCourses.jsx'
 import StudentGrades from './pages/StudentGrades.jsx'
+import InstructorGrades from './pages/InstructorGrades.jsx'
 import LoginPage from './pages/Login.jsx'
 import AllCourses from './pages/AllCourses.jsx'
 import CourseDetails from './components/CourseDetails.jsx'
@@ -121,6 +122,7 @@ const App = () => {
         <Route path='/student-courses' element={<StudentCourses />} />
         <Route path='/instructor-courses' element={<InstructorCourses />} />
         <Route path='/student-grades' element={<StudentGrades />} />
+        <Route path='/instructor-grades' element={<InstructorGrades />}/>
         <Route path='/courses' element={<AllCourses />} />
         <Route path='/courses/:courseId' element={<CourseDetails />} />
         <Route path='/student/courses/:courseId' element={<StudentCourseDetails />} />
