@@ -87,7 +87,7 @@ const InstructorGrades = () => {
       <h1>Gradebook</h1>
 
       {/* -------- STUDENT DROPDOWN -------- */}
-      <div className="studentSelect" style={{ display: 'flex', justifyContent: "space-between", aoptiongnItems: 'center', width: '60%', margin: '0.5rem auto', padding: '0' }}>
+      <div className="studentSelect">
         <label htmlFor="student">Select Student:</label>
         <select id="student" value={selectedStudent?.id || ""} onChange={handleStudentSelect} >
           <option value="">--Choose a student --</option>
@@ -123,7 +123,7 @@ const InstructorGrades = () => {
                   <tr key={enrollment.id}>
                     <td>{enrollment.Course?.name}</td>
                     <td>{enrollment.Course?.credits}</td>
-                    <td style={{ backgroundColor: getGradeColor(enrollment.Grade?.grade), color: "black", borderRadius: "15px" }}>
+                    <td style={{ backgroundColor: getGradeColor(enrollment.Grade?.grade), color: "black" }}>
                       {enrollment.Grade?.grade || "N/A"}
                     </td>
                     <td>
