@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchCourses, fetchCourseById, updateCourse } from "../api/course";
 
-const EditCourse = ({ courseId, setIsModalOpen }) => {
+const EditCourse = ({ courseId, setIsModalOpen, onCourseUpdated }) => {
   const { token } = useContext(AuthContext);
   const [course, setCourse] = useState(null);
   const [courses, setCourses] = useState([]);
@@ -75,6 +75,8 @@ const EditCourse = ({ courseId, setIsModalOpen }) => {
       if (!response) throw new Error("Failed to update course");
 
       const updatedCourse = response.course || course;
+
+      if (onCourseUpdated) onCourseUpdated(updatedCourse);
 
       setCourse(updatedCourse);
       console.log("Submitted EditCourse form: \n updatedCourse:", updatedCourse);

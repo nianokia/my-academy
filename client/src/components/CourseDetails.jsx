@@ -32,17 +32,19 @@ const CourseDetails = () => {
     getCourse();
   }, [courseId, token]);
 
+  // --- dynamically display updated Course ---
+  const handleUpdatedCourse = (updatedCourse) => {
+    setCourse(updatedCourse);
+  };
+
   const handleDelete = async (event) => {
     try {
       await deleteCourse(courseId, token);
       alert(`${course?.name ?? "Course"} has been deleted successfully!`);
-      // console.log(`${deletedCourse.name} was successfully deleted \n ID: ${deletedCourse.id}`)
       
-      // setIsDeleteModalOpen(false);
       navigate(-1)
     } catch (err) {
       alert('Failed to delete course. Please try again.');
-      // console.error('Error deleting course:', err.name, '\n', err.message, '\n Url:', err.config?.url);
       console.error('Error deleting course: ', err)
     }
   }
@@ -77,10 +79,22 @@ const CourseDetails = () => {
                 <li>Created by: {course.created_by}</li>
                 <li>Created at: {course.created_at}</li>
               </ul>
+              <h2>Prerequisites</h2>
+              {course.prerequisites?.length > 0 ? (
+                <ul>
+                  {course.prerequisites.map((prereq) => (
+                    <li key={prereq.id}>{prereq.name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No prerequisites for this course.</p>
+              )}
             </li>
           </ul>
           <InstructorEnrollments courseId={courseId} />
           <button className="deleteUserBtn" onClick={() => setIsDeleteModalOpen(true)}>Delete Course</button>
+          
+          {/* -------- DELETE COURSE MODAL -------- */}
           <ConfirmModal 
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
@@ -95,8 +109,7 @@ const CourseDetails = () => {
 
       {/* -------- EDIT COURSE MODAL -------- */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        {/* --- Render the appropriate registration form based on the selected role --- */}
-        <EditCourse courseId={courseId} setIsModalOpen={setIsModalOpen} />
+        <EditCourse courseId={courseId} setIsModalOpen={setIsModalOpen} onCourseUpdated={handleUpdatedCourse} />
       </Modal>
     </div>
   );
