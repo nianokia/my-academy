@@ -1,17 +1,11 @@
-import { useNavigate } from "react-router";
+import { BackButton } from "../constants/constants";
 
 const StudentGrades = () => {
-  const navigate = useNavigate();
-  const handleBack = () => {
-    navigate(-1);
-  };
   return (
-    <>
-      <button onClick={handleBack} className="backBtn">
-        <img src="/src/assets/back.svg" alt="Left Arrow signifying a back button" />
-      </button>
+    <div className="StudentGrades">
+      <BackButton />
       <h1>Student Grades</h1>
-    </>
+    </div>
   );
 };
 
