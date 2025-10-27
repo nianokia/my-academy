@@ -1,6 +1,6 @@
 import express from "express";
 import verifyToken from "../middleware/authMiddleware.js";
-import { assignGrade } from "../controllers/gradeController.js";
+import { assignGrade, getStudentGrades, getInstructorGrades } from "../controllers/gradeController.js";
 
 const router = express.Router();
 
