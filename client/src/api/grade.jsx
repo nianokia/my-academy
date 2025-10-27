@@ -21,6 +21,15 @@ export const fetchInstructorGrades = async (token) => {
   return res.data;
 };
 
+// -------- FETCH GRADE HISTORY FOR ENROLLMENT --------
+export const fetchGradeHistory = async (enrollmentId, token) => {
+  const res = await axios.get(`${API_URL}/history/${enrollmentId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
+
 // ------------ CREATE OPERATIONS ------------
 // -------- ASSIGN GRADE --------
 export const assignGrade = async (enrollmentId, grade, token) => {
