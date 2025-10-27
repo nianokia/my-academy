@@ -33,8 +33,9 @@ app.use("/api/enrollments", enrollmentRoutes);
 async function testDBConnection() {
     try {
         await sequelize.authenticate();
-        console.log('Database connection successful.');
+        console.log('Database connection successful!');
         await sequelize.sync({ alter: false });
+        console.log("All models synced successfully!");
     } catch (err) {
         console.error('Unable to connect or sync to the database:', 
             { message: err.message, code: err.parent?.code, detail: err.parent?.detail });
