@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // -------- DEFINE USER API BASE URL --------
-const API_URL = `${import.meta.env.VITE_DOMAIN}/api/enrollments`;
+const API_URL = `${import.meta.env.VITE_DOMAIN}/api/grades`;
 console.log('GRADE API URL:', API_URL);
 
 // ------------ GET OPERATIONS ------------
