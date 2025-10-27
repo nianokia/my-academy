@@ -45,16 +45,21 @@ const InstructorDash = () => {
       <h2>Welcome, {user.first_name}!</h2>
       <button className="addCourseBtn" onClick={() => setIsModalOpen(true)}>+ New Course</button>
       <br />
+      <div style={{display: "flex", alignItems: "center", justifyContent: "space-around", margin: "20px 0px 10px" }}>
+        <button>
+          <Link to='/courses'>All Courses List</Link>
+        </button>
+        <br />
+        <button>
+          <Link to='/instructor-courses'>My Courses</Link>
+        </button>
+      </div>
       <button style={{ margin: "10px 0px" }}>
-        <Link to='/courses'>All Courses List</Link>
-      </button>
-      <br />
-      <button style={{ margin: "10px 0px" }}>
-        <Link to='/instructor-courses'>My Courses</Link>
+        <Link to='/users'><strong>All Users</strong></Link>
       </button>
       <br />
       <button style={{ margin: "10px 0px 20px" }}>
-        <Link to='/users'><strong>All Users</strong></Link>
+        <Link to='/instructor/grades'><strong>Grades</strong></Link>
       </button>
       <br />
       <button className="routeBtn" onClick={logout}>Log Out</button>
