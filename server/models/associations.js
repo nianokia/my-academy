@@ -2,6 +2,7 @@ import User from "./User.js";
 import Course from "./Course.js";
 import Enrollment from "./Enrollment.js";
 import Prerequisite from "./Prerequisite.js";
+import Grade from "./Grade.js";
 
 // --- Each course belongs to an instructor ---
 Course.belongsTo(User, { foreignKey: "created_by", as: "instructor" });
@@ -31,4 +32,16 @@ Course.belongsToMany(Course, {
   otherKey: "course_id",
 });
 
-export { User, Course, Enrollment, Prerequisite };
+// --- One Enrollment has one Grade ---
+Enrollment.hasOne(Grade, { foreignKey: "enrollment_id", onDelete: "CASCADE" });
+
+// --- A grade belongs to an enrollment ---
+Grade.belongsTo(Enrollment, { foreignKey: "enrollment_id" });
+
+// --- An Instructor assigns many grades ---
+User.hasMany(Grade, { foreignKey: "assigned_by" });
+
+// --- A grade belongs to an instuctor since they assigned it ---
+Grade.belongsTo(User, { as: "instructor", foreignKey: "assigned_by" });
+
+export { User, Course, Enrollment, Prerequisite, Grade };
