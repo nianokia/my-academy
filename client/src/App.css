@@ -373,3 +373,38 @@
 .enrollBtn {
   margin-top: 1rem;
 }
+
+/* -------- ALL COURSES CSS -------- */
+.AllCourses header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleViewBtn {
+  padding: 0.5rem 1rem;
+  background-color: #444;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.courseFilters {
+  display: flex;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.AllCourses table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courseIdRecord {
+  font-size: 0.62rem;
+}
+
+.AllCourses th {
+  overflow-wrap: anywhere;
+}
