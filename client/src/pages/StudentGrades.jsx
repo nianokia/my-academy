@@ -83,7 +83,8 @@ const StudentGrades = () => {
               </thead>
               <tbody>
                 {grades.map((enrollment) => (
-                  <tr key={enrollment.id}>
+                  // --- ensure all keys are unique (enrollUUID-gradeUUID / enrollUUID-no-grade) ---
+                  <tr key={`${enrollment.id}-${enrollment.Grade?.id || "no-grade"}`}>
                     <td>{enrollment.Course?.name}</td>
                     <td>{enrollment.Course?.credits}</td>
                     <td style={{ backgroundColor: getGradeColor(enrollment.Grade?.grade), color: "black" }}>
