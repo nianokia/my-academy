@@ -2,12 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
 import { fetchStudentGrades, assignGrade } from "../api/grade";
-import { BackButton } from "../constants/constants";
+import { BackButton, calculateGPA } from "../constants/constants";
 
 // - ⚠️ Grade Management
-//    - ❌ Student Selection ––> Dropdown for choosing students
-//    - ❌ Course Overview ––> Table showing all courses a student is enrolled in
-//    - ❌ Grade Assignment ––> Assign grades from A+ to F scale
+//    - ✅ Student Selection ––> Dropdown for choosing students
+//    - ✅ Course Overview ––> Table showing all courses a student is enrolled in
+//    - ✅ Grade Assignment ––> Assign grades from A+ to F scale
 //    - ❌ Grade History ––> View current grades for all enrolled courses
 //    - ❌ GPA Calculation ––> Automatic calculation and display of student GPA
 //    - ❌ Color-Coded Grades ––> Visual indicators for different grade levels
@@ -72,6 +72,14 @@ const InstructorGrades = () => {
       alert(err.response?.data?.message || "Error assigning grade");
     }
   };
+
+  // -------- GPA CALCULATION --------
+  // --- collect array of enrolled grades to send to calculateGPA---
+  const gpa = calculateGPA(
+    grades
+      .map((enrolled) => enrolled.Grade)
+      .filter((g) => g && g.grade)
+  );
 
   return (
     <div className="InstructorGrades">
@@ -142,7 +150,11 @@ const InstructorGrades = () => {
                 ))}
               </tbody>
             </table>
-          )};
+          )}
+          {/* -------- GPA DISPLAY -------- */}
+          {grades.length > 0 && (
+            <h3>Current GPA: <span className="gpaDisplay">{gpa}</span></h3>
+          )}
         </>
       )}
     </div>
