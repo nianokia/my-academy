@@ -59,6 +59,33 @@ export const getInstructorGrades = async (req, res) => {
     }
 };
 
+// -------- GET GRADE HISTORY FOR ENROLLMENT --------
+export const getGradeHistory = async (req, res) => {
+    try {
+        const { enrollmentId } = req.params;
+
+        // --- find all grades linked to an enrollment ---
+        // --- include instructor full name ---
+        // --- collect grades in descending order ---
+        const history = await Grade.findAll({
+            where: { enrollment_id: enrollmentId },
+            include: [
+                {
+                    model: User,
+                    as: "instructor",
+                    attributes: ["id", "first_name", "last_name"],
+                },
+            ],
+            order: [["assigned_at", "DESC"]],
+        });
+
+        res.status(200).json(history);
+    } catch (err) {
+        console.error("Error fetching grade history:", err);
+        res.status(500).json({ message: "Error fetching grade history", error: err.message });
+    }
+};
+
 
 // ------------ POST OPERATIONS ------------
 // -------- ASSIGN OR UPDATE GRADE --------
