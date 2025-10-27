@@ -132,7 +132,11 @@ const InstructorGrades = () => {
                       }
                     </td>
                     <td>
-                      {enrollment.Grade?.assigned_at ? enrollment.Grade.assigned_at : "--"}
+                      {
+                        enrollment.Grade?.assigned_at
+                        ? new Date(enrollment.Grade.assigned_at).toLocaleDateString()
+                        : "--"
+                      }
                     </td>
                     <td>
                       <select defaultValue={enrollment.Grade?.grade || ""}
