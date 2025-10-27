@@ -8,15 +8,28 @@ export const getStudentGrades = async (req, res) => {
         // --- collect all of a student's enrollments ---
         // --- include course & assigned instructor name ---
         const enrollments = await Enrollment.findAll({
-            where: { student_id: studentId },
+            where: { student_id: studentId, status: "enrolled" },
             include: [
-                { model: Course, attributes: ["id", "name", "credits"] },
-                { model: Grade, include: [
-                    { model: User, as: "instructor", attributes: ["first_name", "last_name"] }
-                ]},
+                {
+                    model: Course,
+                    as: "Course", // --- important for clarity ---
+                    attributes: ["id", "name", "credits", "enrollment_limit"],
+                },
+                {
+                    model: Grade,
+                    as: "Grade", // --- ensure alias matches Enrollment.hasOne(Grade) ---
+                    include: [
+                        {
+                            model: User,
+                            as: "instructor", // --- must match Grade.belongsTo(User, { as: "instructor" }) ---
+                            attributes: ["id", "first_name", "last_name", "email"],
+                        },
+                    ],
+                },
             ],
         });
 
+        console.log(JSON.stringify(enrollments, null, 2));
         res.status(200).json(enrollments);
     } catch (err) {
         console.error("Error fetching student grades:", err);
@@ -54,6 +67,8 @@ export const assignGrade = async (req, res) => {
         const { grade } = req.body;
         // --- this userId is the instructor because thats how assigned the grade ---
         const instructorId = req.user.userId;
+
+        if (!grade) return res.status(400).json({ message: "Grade value required" });
 
         const enrollment = await Enrollment.findByPk(enrollmentId);
         if (!enrollment) return res.status(404).json({ message: "Enrollment not found" });
