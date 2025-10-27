@@ -5,14 +5,15 @@ import { Grade, Enrollment, Course, User } from "../models/associations.js";
 export const getStudentGrades = async (req, res) => {
     try {
         const { studentId } = req.params;
-        // --- collect all of a student's enrollments including course & assigned instructor name ---
+        // --- collect all of a student's enrollments ---
+        // --- include course & assigned instructor name ---
         const enrollments = await Enrollment.findAll({
             where: { student_id: studentId },
             include: [
                 { model: Course, attributes: ["id", "name", "credits"] },
-                { model: Grade, include: [{ 
-                    model: User, as: "instructor", attributes: ["first_name", "last_name"] 
-                }]},
+                { model: Grade, include: [
+                    { model: User, as: "instructor", attributes: ["first_name", "last_name"] }
+                ]},
             ],
         });
 
@@ -20,6 +21,28 @@ export const getStudentGrades = async (req, res) => {
     } catch (err) {
         console.error("Error fetching student grades:", err);
         res.status(500).json({ message: "Error fetching student grades", error: err.message });
+    }
+};
+
+// -------- GET ALL GRADES FOR INSTRUCTOR --------
+export const getInstructorGrades = async (req, res) => {
+    try {
+        const instructorId = req.user.userId;
+        // --- collect all grades assigned by instructor ---
+        // --- include course data & student name ---
+        const grades = await Grade.findAll({
+            where: { assigned_by: instructorId },
+            include: [
+                { model: Enrollment, include: [
+                    { model: Course },
+                    { model: User, attributes: ["first_name", "last_name"] }
+                ]},
+            ],
+        });
+        res.status(200).json(grades);
+    } catch (err) {
+        console.error("Error fetching instructor grades:", err);
+        res.status(500).json({ message: "Error fetching instructor grades", error: err.message });
     }
 };
 

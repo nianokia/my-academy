@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/assign/:enrollmentId", verifyToken, assignGrade);
 router.get("/student/:studentId", verifyToken, getStudentGrades);
+router.get("/instructor", verifyToken, getInstructorGrades);
 
 export default router;
