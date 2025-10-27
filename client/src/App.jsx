@@ -41,7 +41,7 @@ import './App.css'
 //    - ✅ Search Functionality ––> Filter users by ID, name, email, or major/course
 //    - ⚠️ Input Validation ––> Comprehensive validation for all fields
 //    - ✅ Duplicate Prevention ––> Prevents duplicate student IDs  
-// - ⚠️ Course Management & Enrollment
+// - ✅ Course Management & Enrollment
 //    - ✅ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
 //    - ✅ Update Course Information ––> Modify existing course details
 //    - ✅ View Course Details ––> Display all courses in a sortable table
@@ -49,14 +49,14 @@ import './App.css'
 //    - ✅ Set Prerequisites ––> Define prerequisite courses required for enrollment
 //    - ✅ Enrollment Limits ––> Set maximum number of students per course
 //    - ✅ Available Seats ––> Track and display available seats for each course
-//    - ❌ Course Selection ––> Dropdown menu for selecting available courses
+//    - ✅ Course Selection ––> Dropdown menu for selecting available courses
 //    - ✅ Student Lists ––> Separate lists for available and enrolled students
 //    - ✅ Bulk Enrollment ––> Select and enroll multiple students simultaneously
 //    - ✅ Unenrollment ––> Remove students from courses with confirmation
 //    - ✅ Prerequisite Checking ––> Verify students meet prerequisites before enrollment
 //    - ✅ Capacity Management ––> Prevent enrollment when courses reach capacity
 //    - ✅ Student Filtering ––> Search functionality for both available and enrolled students
-// - Grade Management
+// - ⚠️ Grade Management
 //    - ❌ Student Selection ––> Dropdown for choosing students
 //    - ❌ Course Overview ––> Table showing all courses a student is enrolled in
 //    - ❌ Grade Assignment ––> Assign grades from A+ to F scale

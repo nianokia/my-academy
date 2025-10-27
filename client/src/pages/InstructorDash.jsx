@@ -6,7 +6,7 @@ import Modal from "../components/Modal.jsx";
 // -------- IMPORT REACT-ROUTER ELEMENTS --------
 import { Link } from "react-router";
 
-// - Course Management & Enrollment
+// - ✅ Course Management & Enrollment
 //    - ✅ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
 //    - ✅ Update Course Information ––> Modify existing course details
 //    - ✅ View Course Details ––> Display all courses in a sortable table
@@ -21,7 +21,7 @@ import { Link } from "react-router";
 //    - ✅ Capacity Management ––> Prevent enrollment when courses reach capacity
 //    - ✅ Student Filtering ––> Search functionality for both available and enrolled students
 
-// - Grade Management
+// - ⚠️ Grade Management
 //    - ❌ Student Selection ––> Dropdown for choosing students
 //    - ❌ Course Overview ––> Table showing all courses a student is enrolled in
 //    - ❌ Grade Assignment ––> Assign grades from A+ to F scale
