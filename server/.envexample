@@ -2,4 +2,8 @@
 PORT={yourServerListeningPort}
 DOMAIN='http://localhost:{yourServerListeningPort}/'
 
+<!-- To connect to database -->
 DATABASE_URI='postgresql://localhost/{yourDatabaseName}'
+
+<!-- generate a random 64-char code (run openssl rand -base64 64 in terminal) -->
+JWT_SECRET='generatedSecret'
