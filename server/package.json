@@ -7,7 +7,7 @@
     "dev": " concurrently 'npm start' 'cd .. && cd client && npm run dev' ",
     "start": "nodemon server.js",
     "server": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "keywords": [],
   "author": "Nia Wright",
