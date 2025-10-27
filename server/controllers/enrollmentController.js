@@ -1,5 +1,3 @@
-// import User from "../models/User.js";
-// import Course from "../models/Course.js";
 import { User, Course, Enrollment } from "../models/associations.js";
 
 // ------------ READ OPERATIONS ------------
@@ -18,6 +16,34 @@ export const getEnrolledStudents = async (req, res) => {
         res.status(500).json({ message: "Error fetching enrolled students", error: err.message });
     }
 };
+
+// -------- GET ENROLLED COURSES --------
+export const getStudentEnrollments = async (req, res) => {
+    try {
+        const { studentId } = req.params;
+
+        // --- collect student data and include enrolled course data ---
+        const student = await User.findByPk(studentId, {
+            include: [{
+                model: Course,
+                as: "enrolledCourses",
+                through: { attributes: [] },
+                attributes: ["id", "name", "credits", "enrollment_limit", "created_by"],
+            }],
+        });
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        // --- student.enrolledCourses is an array of the enrolled course objects ---
+        res.status(200).json(student.enrolledCourses);
+    } catch (err) {
+        console.error("Error fetching student enrollments:", err);
+        res.status(500).json({ message: "Error fetching enrollments", error: err.message });
+    }
+};
+
 
 // ------------ POST OPERATIONS ------------
 // -------- ENROLL STUDENTS --------
@@ -94,6 +120,64 @@ export const enrollStudents = async (req, res) => {
 };
 
 
+// -------- STUDENT ENROLL IN COURSE --------
+export const enrollStudent = async (req, res) => {
+    try {
+        const { studentId, courseId } = req.params;
+
+        // --- check if course exists ---
+        const course = await Course.findByPk(courseId, {
+            include: [{ association: "prerequisites" }],
+        });
+        if (!course) return res.status(404).json({ message: "Course not found" });
+
+        // --- check if already enrolled ---
+        const existing = await Enrollment.findOne({
+            where: { student_id: studentId, course_id: courseId, status: "enrolled" },
+        });
+        if (existing) return res.status(400).json({ message: "Already enrolled in this course" });
+
+        // -------- CHECK SEAT AVAILABILITY --------
+        const enrolledCount = await Enrollment.count({
+            where: { course_id: courseId, status: "enrolled" },
+        });
+
+        const availableSeats = course.enrollment_limit - enrolledCount;
+        if (availableSeats <= 0) {
+            return res.status(400).json({ message: "Course is full. No seats available." });
+        }
+
+        // -------- VERIFY PREREQUISITES --------
+        const prereqIds = course.prerequisites.map((p) => p.id);
+        if (prereqIds.length > 0) {
+            const completed = await Enrollment.findAll({
+                where: { student_id: studentId, course_id: prereqIds, status: "enrolled" },
+            });
+
+            if (completed.length < prereqIds.length) {
+                return res.status(400).json({
+                    message: "You do not meet all prerequisites for this course.",
+                    required: prereqIds.length,
+                    completed: completed.length,
+                });
+            }
+        }
+
+        // -------- PROCEED WITH ENROLLMENT --------
+        await Enrollment.create({
+            student_id: studentId,
+            course_id: courseId,
+            status: "enrolled",
+        });
+
+        res.status(200).json({ message: "Enrolled successfully" });
+  } catch (err) {
+        console.error("Error enrolling student:", err);
+        res.status(500).json({ message: "Error enrolling student", error: err.message });
+  }
+};
+
+
 // ------------ DELETE OPERATIONS ------------
 // -------- UNENROLL STUDENT --------
 export const unenrollStudent = async (req, res) => {
@@ -110,6 +194,25 @@ export const unenrollStudent = async (req, res) => {
         res.status(200).json({ message: "Student unenrolled successfully" });
     } catch (err) {
         console.error("Error unenrolling student: ", err);
+        res.status(500).json({ message: "Error unenrolling student", error: err.message });
+    }
+};
+
+// -------- STUDENT UNENROLL FROM COURSE --------
+export const unenrollStudentByStudent = async (req, res) => {
+    try {
+        const { studentId, courseId } = req.params;
+
+        const enrollment = await Enrollment.findOne({
+            where: { student_id: studentId, course_id: courseId },
+        });
+
+        if (!enrollment) return res.status(404).json({ message: "Enrollment not found" });
+
+        await enrollment.destroy();
+        res.status(200).json({ message: "Unenrolled successfully" });
+    } catch (err) {
+        console.error("Error unenrolling student:", err);
         res.status(500).json({ message: "Error unenrolling student", error: err.message });
     }
 };
