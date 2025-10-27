@@ -52,7 +52,9 @@ export const enrollStudents = async (req, res) => {
 
         for (const studentId of studentIds) {
             // --- collect all prereq ids for the course ---
-            const prereqIds = course.prerequisites.map((prereq) => prereq.prequisite_course_id);
+            // const prereqIds = course.prerequisites.map((prereq) => prereq.prerequisite_course_id);
+            const prereqIds = course.prerequisites.map((prereq) => prereq.id);
+            console.log("Prerequisites for course:", prereqIds);
 
             if (prereqIds.length > 0) {
                 // --- verify if student completed all prereqs ---
