@@ -6,6 +6,26 @@
 }
 
 /* -------- COMMON CSS -------- */
+.row {
+  display: flex;
+}
+
+.flex {
+  display: flex;
+}
+
+.halfWidth {
+  width: 50%;
+}
+
+.card {
+  margin: 0 40px 25px;
+  padding: 20px 60px 40px;
+  background-color: cornflowerblue;
+  color: #242424;
+  border: 6px double #242424;
+  border-radius: 18px;
+}
 
 .profileIcon {
   width: 30px;
@@ -24,6 +44,11 @@
   text-align: right;
   margin-right: 475px;
   margin-top: 20px;
+}
+
+.editProfileIcon {
+  cursor: pointer;
+  color: cornflowerblue;
 }
 
 /* -------- NAV CSS -------- */
@@ -57,43 +82,6 @@
 .navLink {
   display: inline-block;
   padding: 0px 10px;
-}
-
-/* -------- HOME CSS -------- */
-
-.row {
-  display: flex;
-}
-
-.loginHub {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.signInHub {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loginHub .card {
-  margin: 25px auto;
-  padding: 20px 60px 40px;
-  width: 180px;
-  background-color: cornflowerblue;
-  color: #242424;
-  border: 6px double #242424;
-  border-radius: 18px;
-}
-
-.card {
-  margin: 0 40px 25px;
-  padding: 20px 60px 40px;
-  background-color: cornflowerblue;
-  color: #242424;
-  border: 6px double #242424;
-  border-radius: 18px;
 }
 
 .routeBtn a {
@@ -140,79 +128,13 @@
 
 /* -------- FORM CSS -------- */
 
+/* ---- REGISTER FORM ---- */
 .register-form {
   display: flex;
   justify-content: space-around;
 }
 
-/* -------- PROFILE CSS -------- */
-.UserProfile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-}
-
-.UserProfile h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.UserProfile ul {
-  list-style: none;
-  text-align: start;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-.UserProfile li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  width: 100%;
-}
-
-.editProfileIcon {
-  cursor: pointer;
-  color: cornflowerblue;
-}
-
-.EditProfile form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0 auto;
-  margin-top: 2rem;
-  width: 80%;
-  /* width: 300px; */
-}
-
-/* USER TABLE */
-
-.userFilters {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.userFilters input {
-  padding: 5px;
-  border: 1px solid #ccc;
-}
-
-.UserTable table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.UserTable th {
-  cursor: pointer;
-  padding: 8px;
-  border-bottom: 2px solid cornflowerblue;
-}
-
+/* ---- ADD COURSE FORM ---- */
 .AddCourseForm {
   display: flex;
   flex-direction: column;
@@ -245,6 +167,98 @@
   border: none;
   cursor: pointer;
 }
+
+/* ---- EDIT PROFILE FORM ---- */
+
+.EditProfile form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+  width: 80%;
+  /* width: 300px; */
+}
+
+/* -------- HOME CSS -------- */
+
+.loginHub {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.loginHub .card {
+  margin: 25px auto;
+  padding: 20px 60px 40px;
+  width: 180px;
+  background-color: cornflowerblue;
+  color: #242424;
+  border: 6px double #242424;
+  border-radius: 18px;
+}
+
+/* -------- SIGN UP CSS -------- */
+.signInHub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -------- PROFILE CSS -------- */
+.UserProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.UserProfile h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.UserProfile ul {
+  list-style: none;
+  text-align: start;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.UserProfile li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+/* -------- USER TABLE -------- */
+
+.userFilters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.userFilters input {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.UserTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.UserTable th {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 2px solid cornflowerblue;
+}
+
+/* -------- COURSE DETAILS -------- */
 
 .courseList {
   text-align: start;
@@ -293,4 +307,43 @@
   background: rgba(0,0,0,0.3);
   color: #d9534f;
   border: 1px solid #242424;
+}
+
+/* -------- INSTRUCTOR ENROLLMENTS CSS -------- */
+
+.InstructorEnrollments h2 {
+  margin: 0.5rem 0rem;
+}
+
+.InstructorEnrollments h3 {
+  margin: 0.25rem 0rem 0.75rem;
+}
+
+.enrollmentContainer ul {
+  height: 10rem;
+  margin: 0;
+  padding: 0;
+  background: rgba(0,0,0,0.07);
+  text-align: start;
+  border-radius: 10px;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.enrolledStudents li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 1rem;
+}
+
+.availableStudents {
+  padding: 0 0.5rem;
+}
+
+.availableStudents span {
+  margin-left: -2rem;
+}
+
+.enrollBtn {
+  margin-top: 1rem;
 }
