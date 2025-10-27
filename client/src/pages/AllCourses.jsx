@@ -146,22 +146,40 @@ const AllCourses = () => {
           </tbody>
         </table>
       ) : (
-        <></>
+        // -------- LIST VIEW --------
+        <ul className="courseList">
+          {filteredAndSortedCourses.map((course) => (
+            <li key={course.id} className="singleCourse">
+              <strong>{course.name}</strong>
+              <ul className="courseData">
+                <li>ID: {course.id}</li>
+                <li>Credits: {course.credits}</li>
+                <li>Enrollment Limit: {course.enrollment_limit}
+                  <ul>
+                    <li>Currently Enrolled: {course.enrolled_count ?? "N/A"}</li>
+                    <li>Seats Available: {course.seats_available ?? "N/A"}</li>
+                  </ul>
+                </li>
+                <li>Created by: {course.created_by}</li>
+                {/* -------- PREREQUISISTES (only for list view) -------- */}
+                <li>
+                  <strong>Prerequisites:</strong>{" "}
+                  {course.prerequisites?.length > 0 ? (
+                    <ul>
+                      {course.prerequisites.map((prereq) => (
+                        <li key={prereq.id}>{prereq.name}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span>No prerequisites</span>
+                  )}
+                </li>
+              </ul>
+            </li>
+          ))}
+        </ul>
       )}
-      <h1>Course List</h1>
-      <ul style={{ textAlign: 'start' }}>
-        {courses.map((course) => (
-          <li key={course.id} value={course.id}>
-            <strong>{course.name}</strong>
-            <ul>
-              <li>Credits: {course.credits}</li>
-              <li>Enrollment Limit: {course.enrollment_limit}</li>
-              <li>Created by: {course.created_by}</li>
-            </ul>
-          </li>
-        ))}
-        {courses.length === 0 && <li>No courses found.</li>}
-      </ul>
+      {filteredAndSortedCourses.length === 0 && <p>No courses found.</p>}
     </div>
   );
 };
