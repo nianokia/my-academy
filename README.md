@@ -137,15 +137,15 @@ Create 2 .env files (one in the server and the other in the client).
 1. Create the database:
 
     ```CREATE DATABASE my_academy;```
-2. There are 2 ways to restore the DB dump file:
+2. There are 2 ways to restore the DB dump file from root folder:
     * A- If you have postgres, set it up with your user: 
 
-        ```psql -U <your_user> -d my_academy -f db.sql```
+        ```psql -U <your_user> -d my_academy -f server/db/db.sql```
         * Make sure that you have your Postgres password on hand as the console will ask for it.
 
     * B- If your initial configuration of postgres doesn't require a User:
 
-        ```psql my_academy -f db.sql```
+        ```psql my_academy -f server/db/db.sql```
 
 
 ### 5. Run the App
