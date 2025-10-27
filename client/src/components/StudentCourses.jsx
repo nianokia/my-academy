@@ -14,8 +14,8 @@ const StudentCourses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchAvailable, setSearchAvailable] = useState("");
   const [searchEnrolled, setSearchEnrolled] = useState("");
+  const [selectedDropdownCourse, setSelectedDropdownCourse] = useState("");
 
   // -------- FETCH ALL COURSES --------
   const getCourses = async () => {
@@ -77,10 +77,6 @@ const StudentCourses = () => {
   };
 
   // -------- FILTERED RESULTS --------
-  const filteredAvailable = availableCourses.filter((course) =>
-    course.name.toLowerCase().includes(searchAvailable.toLowerCase())
-  );
-
   const filteredEnrolled = enrolledCourses.filter((course) =>
     course.name.toLowerCase().includes(searchEnrolled.toLowerCase())
   );
@@ -89,6 +85,33 @@ const StudentCourses = () => {
     <div className="StudentCourses">
       <BackButton />
       <h1>Course Enrollment</h1>
+
+      {/* -------- AVAILABLE COURSES -------- */}
+        <div className="availableCourses">
+          <h2>Available Courses</h2>
+          <div className="enrollDropdown">
+            <select 
+              value={selectedDropdownCourse} 
+              onChange={(event) => setSelectedDropdownCourse(event.target.value)}
+            >
+              <option value="" disabled>-- Select a course to enroll --</option>
+              {availableCourses.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.name} ({course.credits} credits)
+                </option>
+              ))}
+            </select>
+            <button className="enrollBtn"
+              onClick={() => {
+                if (!selectedDropdownCourse) { alert("Please select a course first"); return; };
+                handleEnroll(selectedDropdownCourse);
+                setSelectedDropdownCourse("");
+              }}
+            >
+              Enroll
+            </button>
+          </div>
+        </div>
 
       <div className="courseContainer">
         {/* -------- ENROLLED COURSES -------- */}
@@ -104,8 +127,7 @@ const StudentCourses = () => {
             {filteredEnrolled.map((course) => (
               <li key={course.id} className="singleCourse" onClick={() => navigate(`/student/courses/${course.id}`)}>
                 <span><strong>{course.name}</strong> ({course.credits} credits)</span>
-                <button
-                  className="unenrollBtn"
+                <button className="unenrollBtn"
                   onClick={(event) => {
                     event.stopPropagation()
                     setSelectedCourse(course);
@@ -117,34 +139,6 @@ const StudentCourses = () => {
               </li>
             ))}
             {filteredEnrolled.length === 0 && <li>No enrolled courses found.</li>}
-          </ul>
-        </div>
-
-        {/* -------- AVAILABLE COURSES -------- */}
-        <div className="availableCourses">
-          <h2>Available Courses</h2>
-          <input
-            type="text"
-            placeholder="Search available..."
-            value={searchAvailable}
-            onChange={(event) => setSearchAvailable(event.target.value)}
-          />
-          <ul className="courseList">
-            {filteredAvailable.map((course) => (
-              <li key={course.id} className="singleCourse" onClick={() => navigate(`/student/courses/${course.id}`)}>
-                <span><strong>{course.name}</strong> ({course.credits} credits)</span>
-                <button
-                  className="enrollBtn"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    handleEnroll(course.id);
-                  }}
-                >
-                  Enroll
-                </button>
-              </li>
-            ))}
-            {filteredAvailable.length === 0 && <li>No courses available.</li>}
           </ul>
         </div>
       </div>

@@ -441,3 +441,20 @@
 .courseData {
   margin: 0.5rem 0 0 1rem;
 }
+
+.enrollDropdown {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.enrollDropdown select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.enrollDropdown button {
+  padding: 0.5rem 1rem;
+}
