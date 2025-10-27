@@ -16,6 +16,7 @@ import StudentGrades from './pages/StudentGrades.jsx'
 import LoginPage from './pages/Login.jsx'
 import AllCourses from './pages/AllCourses.jsx'
 import CourseDetails from './components/CourseDetails.jsx'
+import StudentCourseDetails from './components/StudentCourseDetails.jsx'
 import AuthContext from './context/AuthContext.jsx'
 
 // -------- IMPORT CSS --------
@@ -31,7 +32,7 @@ import './App.css'
 // FEATURES:
 // - ⚠️ CRUD operations (Create, Read, Update, Delete).
 // - ✅ User authentication (login, registration)
-// - ✅ User Management: ✅ Creating user accounts, ❓ handling patron info, and ✅ providing 
+// - ✅ User Management: ✅ Creating user accounts, ✅ handling patron info, and ✅ providing 
 //      authentication for library services. ✅ User profiles to manage their personal library.
 //    - ✅ Add New Students or Teachers ––> Create new user records with ID, name, email, and major
 //    - ✅ Update Student or Teacher Information ––> Modify existing user details
@@ -40,21 +41,21 @@ import './App.css'
 //    - ✅ Search Functionality ––> Filter users by ID, name, email, or major/course
 //    - ⚠️ Input Validation ––> Comprehensive validation for all fields
 //    - ✅ Duplicate Prevention ––> Prevents duplicate student IDs  
-// - Course Management & Enrollment
+// - ⚠️ Course Management & Enrollment
 //    - ✅ Add New Courses ––> Create course records with ID, name, credits, and enrollment limits
-//    - ❌ Update Course Information ––> Modify existing course details
-//    - ⚠️ View Course Details ––> Display all courses in a sortable table
-//    - ❌ Delete Courses ––> Remove course records with confirmation
-//    - ⚠️ Set Prerequisites ––> Define prerequisite courses required for enrollment
-//    - ⚠️ Enrollment Limits ––> Set maximum number of students per course
-//    - ❌ Available Seats ––> Track and display available seats for each course
+//    - ✅ Update Course Information ––> Modify existing course details
+//    - ✅ View Course Details ––> Display all courses in a sortable table
+//    - ✅ Delete Courses ––> Remove course records with confirmation
+//    - ✅ Set Prerequisites ––> Define prerequisite courses required for enrollment
+//    - ✅ Enrollment Limits ––> Set maximum number of students per course
+//    - ✅ Available Seats ––> Track and display available seats for each course
 //    - ❌ Course Selection ––> Dropdown menu for selecting available courses
-//    - ❌ Student Lists ––> Separate lists for available and enrolled students
-//    - ❌ Bulk Enrollment ––> Select and enroll multiple students simultaneously
-//    - ❌ Unenrollment ––> Remove students from courses with confirmation
-//    - ❌ Prerequisite Checking ––> Verify students meet prerequisites before enrollment
-//    - ❌ Capacity Management ––> Prevent enrollment when courses reach capacity
-//    - ❌ Student Filtering ––> Search functionality for both available and enrolled students
+//    - ✅ Student Lists ––> Separate lists for available and enrolled students
+//    - ✅ Bulk Enrollment ––> Select and enroll multiple students simultaneously
+//    - ✅ Unenrollment ––> Remove students from courses with confirmation
+//    - ✅ Prerequisite Checking ––> Verify students meet prerequisites before enrollment
+//    - ✅ Capacity Management ––> Prevent enrollment when courses reach capacity
+//    - ✅ Student Filtering ––> Search functionality for both available and enrolled students
 // - Grade Management
 //    - ❌ Student Selection ––> Dropdown for choosing students
 //    - ❌ Course Overview ––> Table showing all courses a student is enrolled in
@@ -122,6 +123,7 @@ const App = () => {
         <Route path='/student-grades' element={<StudentGrades />} />
         <Route path='/courses' element={<AllCourses />} />
         <Route path='/courses/:courseId' element={<CourseDetails />} />
+        <Route path='/student/courses/:courseId' element={<StudentCourseDetails />} />
       </Routes>
       <footer><a href="https://lordicon.com/" target='onBlank' style={{fontSize: '10px'}}>Icons by Lordicon.com</a></footer>
     </>
