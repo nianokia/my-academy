@@ -52,7 +52,7 @@ const EditCourse = ({ courseId, setIsModalOpen }) => {
         name: course.name || '',
         credits: course.credits || '',
         enrollment_limit: course.enrollment_limit || '',
-        prerequisites: [],
+        prerequisites: course.prerequisites?.map(prereq => prereq.id) || [],
       });
     }
   }, [course]);
