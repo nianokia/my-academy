@@ -15,7 +15,7 @@ const Grade = sequelize.define('Grade', {
         allowNull: false,
     },
     grade: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"),
         allowNull: true,
     },
     assigned_by: {
