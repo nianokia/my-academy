@@ -1,59 +1,88 @@
 # My Academy
-My Academy is a FS web application that allows instructors to manage courses, enrollments, and grades, while students can browse available courses, enroll, and track their academic progress in an interactive dashboard.  
+My Academy is a full-stack web application that allows **instructors** to manage courses, enrollments, and student grades, while **students** can view available courses, enroll, track grades, and calculate their GPA. 
 
+This project integrates a Postgres database with an Express.js backend and a modern React + Vite frontend.
 
 ## ✨ Features  
 
 ### 🎓 Instructor Features  
-- Manage course creation, editing, and deletion  
-- View all enrolled students per course  
-- Enroll or unenroll students directly  
-- Assign and update grades using an A+ - F grading scale  
-- Track student performance with automated GPA calculation  
-- Access historical grading records with timestamps  
+- Create, edit, and manage courses
+- Enroll and unenroll students from courses
+- Enforce prerequisites and seat availability checks
+- Assign, update, and view grades (A+–F scale)
+- Track grading history and assignment dates
+- Color-coded grade visualization for performance clarity 
 
 ### 🧑‍🎓 Student Features  
-- Browse and filter available courses  
-- Enroll or unenroll from available courses  
-- View enrolled courses and course details  
-- View current grades and grade history  
-- See automatically calculated GPA with color-coded grade visualization  
-
-### ⚙️ System Features  
-- Full CRUD operations for courses, users, enrollments, and grades  
-- Role-based authentication & authorization (Student / Instructor)  
-- Real-time GPA calculation  
-- Color-coded grade indicators (A = green, F = red, etc.)  
-- Date tracking for grade assignment history  
-- Modular RESTful API architecture  
+- View available and enrolled courses
+- Enroll or unenroll from courses
+- View current grades and grading history
+- Automatic GPA calculation
+- Color-coded grade display by performance
+- View course details including prerequisites and seat availability
 
 ---
 
 ## 🧰 Technologies Used  
 
+### Frontend
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+### Backend
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue)
 ![Nodemon](https://img.shields.io/badge/NODEMON-%23323330.svg?style=for-the-badge&logo=nodemon&logoColor=%BBDEAD)
 ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
-**Frontend:** React (Vite), React Router, Axios  
-**Backend:** Node.js, Express.js, Sequelize  
-**Database:** PostgreSQL  
-**Authentication:** JWT (JSON Web Tokens)  
-**Additional Tools:** Nodemon, Concurrently, Dotenv  
 
+## ⚙️ Dependencies Overview
+
+| Package | Purpose |
+|----------|----------|
+| **React / Vite** | Frontend framework & dev environment |
+| **Axios** | Handles HTTP requests between frontend & backend |
+| **Express.js** | Web framework for routing & middleware handling |
+| **Sequelize** | ORM for interacting with PostgreSQL database |
+| **pg / pg-hstore** | PostgreSQL driver & data serialization |
+| **bcrypt** | Password hashing for user authentication |
+| **jsonwebtoken (JWT)** | Secure token-based authentication |
+| **dotenv** | Loads environment variables from `.env` file |
+| **cors** | Enables cross-origin resource sharing |
+| **concurrently** | Runs client & server concurrently in dev mode |
+| **nodemon** | Auto-restarts server when backend files change |
 ---
 
 ## 🎬 Demo  
-
 ![demo](https://media4.giphy.com/media/v1.Y2/giphy.gif)
 
-<!-- _Full [Demo](https://youtu.be/r6pMR) on YouTube_ -->
+---
+## 🗄️ Database Setup
+
+**Database:** PostgreSQL  
+**ORM:** Sequelize  
+
+### Schema Overview
+The application uses five main tables:
+
+| Table | Description |
+|--------|--------------|
+| **users** | Stores all user data including role (student or instructor) |
+| **courses** | Contains all course details & instructor associations |
+| **enrollments** | Junction table linking students to courses |
+| **grades** | Stores grades, instructor assignment, and timestamp |
+| **prerequisites** | Manages many-to-many relationships between courses |
+
+**Foreign Key Relationships:**
+- `grades.assigned_by → users.id`
+- `grades.enrollment_id → enrollments.id`
+- `enrollments.course_id → courses.id`
+- `enrollments.student_id → users.id`
+
+A database dump file (`db.sql`) can be restored for quick setup.
+
 
 ---
 
@@ -69,23 +98,22 @@ rm -rf .git
 ```
 
 ### 2. Install Dependencies  
-* **For both the client (frontend) and server (backend) directories:**
-    * **Backend Setup:**
-        ```bash
-        cd server
-        npm install
-        ```
-    * **Frontend Setup:**
+* **Backend Setup:**
+    ```bash
+    cd server
+    npm install
+    ```
+* **Frontend Setup:**
 
-        ```bash
-        cd client
-        npm install
-        ```
+    ```bash
+    cd client
+    npm install
+    ```
 
-    * This will install all the necessary packages for both the frontend (Vite and React) and backend (Express.js, cors, and nodemon).
+This will install all the necessary packages for both the frontend (Vite and React) and backend (Express.js, cors, and nodemon).
 
 ### 3. Environment Variables
-Create a .env file in the server folder.
+Create 2 .env files (one in the server and the other in the client).
 * **Backend Setup:**
     ```bash
     <!-- Define your server listening port -->
@@ -109,7 +137,7 @@ Create a .env file in the server folder.
 1. Create the database:
 
     ```CREATE DATABASE my_academy;```
-2. There are two ways to restore the DB dump file the project already contains:
+2. There are 2 ways to restore the DB dump file:
     * A- If you have postgres, set it up with your user: 
 
         ```psql -U <your_user> -d my_academy -f db.sql```
@@ -117,12 +145,12 @@ Create a .env file in the server folder.
 
     * B- If your initial configuration of postgres doesn't require a User:
 
-        ```psql -d my_academy -f db.sql```
+        ```psql my_academy -f db.sql```
 
 
 ### 5. Run the App
 
-***Run frontend & backend concurrently from the server directory:**    
+**Run frontend & backend concurrently from the server directory:**    
 ```bash
 cd server
 npm run dev
@@ -147,11 +175,36 @@ The app should now be running at `http://localhost:5173` *or whatever URL the se
 * `UserTable.jsx` – view, search, sort, and filter all users in a table.
 * `UserProfile.jsx` – view account details, edit or delete account.
 
+## 🌐 API Routes Overview
+### Auth Routes
+|Method	| Endpoint	| Description |
+|-------|----------|--------------|
+|POST	|/api/auth/register|	Register new user |
+|POST	|/api/auth/login	|Login and receive JWT token |
+### Course Routes
+|Method	|Endpoint   | Description |
+|-------|----------|--------------|
+|GET	|/api/courses	|Fetch all courses |
+|GET	|/api/courses/:id	|Fetch single course by ID |
+|POST	|/api/courses	|Create new course (Instructor only) |
+|PUT	|/api/courses/:id	|Update course (Instructor only) |
+DELETE	|/api/courses/:id	|Delete course (Instructor only) |
+### Enrollment Routes
+|Method	|Endpoint	|Description |
+|-------|----------|--------------|
+|GET	|/api/enrollments/:studentId	|Fetch all enrollments for a student |
+|POST	|/api/enroll/:studentId/:courseId	|Enroll a student (checks prerequisites/seats) |
+|DELETE	|/api/unenroll/:studentId/:courseId	|Unenroll student from a course |
+### Grade Routes
+|Method	|Endpoint	|Description |
+|-------|----------|--------------|
+|GET	|/api/grades/student/:studentId	|Fetch grades for a student |
+|GET	|/api/grades/history/:enrollmentId	|Fetch grade history for an enrollment |
+|POST	|/api/grades/:enrollmentId	|Assign or update a grade (Instructor only) |
 
 ## 🛸 Future Implementations
-### Stretch Goals :
 * Utilize 3rd party styling framework, like Bootstrap or Tailwind.CSS
-* Present a pop-up modal on form submission to allow user to review and update submission before sending it
+* Put Instructor & Student files in separate folder (Ex: `/src/pages/instructor`)
 
 ## 📚 Resources
 (*Refer to official documentation for setup specifics*)
