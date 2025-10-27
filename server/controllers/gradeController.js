@@ -59,6 +59,7 @@ export const getInstructorGrades = async (req, res) => {
     }
 };
 
+
 // ------------ POST OPERATIONS ------------
 // -------- ASSIGN OR UPDATE GRADE --------
 export const assignGrade = async (req, res) => {
@@ -73,24 +74,31 @@ export const assignGrade = async (req, res) => {
         const enrollment = await Enrollment.findByPk(enrollmentId);
         if (!enrollment) return res.status(404).json({ message: "Enrollment not found" });
 
-        // --- collect existing grad (if it exists) ---
-        let existingGrade = await Grade.findOne({ where: { enrollment_id: enrollmentId } });
+        // --- Add a new grade record ---
+        const newGrade = await Grade.create({
+            enrollment_id: enrollmentId,
+            grade,
+            assigned_by: instructorId,
+        });
 
-        // --- if it exists replace it with the new grade & assign instructor who assigned it ---
-        // --- if it doesn't exist create a new grade ---
-        if (existingGrade) {
-            existingGrade.grade = grade;
-            existingGrade.assigned_by = instructorId;
-            await existingGrade.save();
-        } else {
-            existingGrade = await Grade.create({
-                enrollment_id: enrollmentId,
-                grade,
-                assigned_by: instructorId,
-            });
-        }
+        // // --- collect existing grad (if it exists) ---
+        // let existingGrade = await Grade.findOne({ where: { enrollment_id: enrollmentId } });
 
-        res.status(200).json({ message: "Grade assigned successfully", grade: existingGrade });
+        // // --- if it exists replace it with the new grade & assign instructor who assigned it ---
+        // // --- if it doesn't exist create a new grade ---
+        // if (existingGrade) {
+        //     existingGrade.grade = grade;
+        //     existingGrade.assigned_by = instructorId;
+        //     await existingGrade.save();
+        // } else {
+        //     existingGrade = await Grade.create({
+        //         enrollment_id: enrollmentId,
+        //         grade,
+        //         assigned_by: instructorId,
+        //     });
+        // }
+
+        res.status(200).json({ message: "Grade assigned successfully", grade: newGrade });
     } catch (err) {
         console.error("Error assigning grade:", err);
         res.status(500).json({ message: "Error assigning grade", error: err.message });
