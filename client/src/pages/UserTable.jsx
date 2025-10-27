@@ -1,8 +1,10 @@
-import { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState, useContext, useMemo } from 'react';
+import AuthContext from '../context/AuthContext';
+import { fetchUsers } from "../api/user";
+import { BackButton } from '../constants/constants';
 
 const UserTable = () => {
-  // -------- SET STATES --------
+  const { token } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   // --- key collects sorted column identifier, direction toggles baseed off of event listener ---
   const [sort, setSort] = useState({ key: 'id', direction: 'asc' });
@@ -15,35 +17,26 @@ const UserTable = () => {
     role: '',
     major: '',
   });
-  
-  const navigate = useNavigate();
-
-  // --- Define the API route using the environment variable ---
-  const tableRoute = `${import.meta.env.VITE_DOMAIN}/api/users`;
-  console.log('Table Route:', tableRoute);
 
   // -------- FETCH ALL USERS --------
-  const fetchUsers = async () => {
+  const fetchAllUsers = async () => {
     try {
-      const response = await fetch(tableRoute);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // --- Log response in JSON format ---
-      const data = await response.json();
-      console.log('Fetched users:', data);
-      setUsers(data);
+      const allUsers = await fetchUsers(token);
+      console.log("Fetched Users: ", allUsers);
+      setUsers(allUsers);
     } catch (err) {
       console.error('Error fetching users:', err);
+      alert("Failed to load users. Please try again.");
     }
-  };
-  
-  // --- Call fetchUsers whenever the tableRoute changes ---
-  useEffect(() => {
-    fetchUsers();
-  }, [tableRoute]);
+  }
 
+  // --- Call fetchAllUsers whenever the token changes ---
+  useEffect(() => {
+    if (token) fetchAllUsers();
+  }, [token]);
+  
+
+  // -------- SORT & FILTER --------
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     // --- only updates the filter being changed, while leaving the other filters alone ---
@@ -88,78 +81,63 @@ const UserTable = () => {
     return filtered;
   }, [users, filters, sort]);
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <>
-      <button onClick={handleBack} className="backBtn">
-        <img src="/src/assets/back.svg" alt="Left Arrow signifying a back button" />
-      </button>
-      <div className='UserTable'>
+    <div className='UserTable'>
+      <BackButton />
+      <div className='UserTableContainer'>
         <h1>User Table</h1>
 
         {/* -------- FILTERS -------- */}
-         <div className='userFilters'>
-           {Object.keys(filters).map((key) => (
-             <input
-               key={key}
-               type="text"
-               name={key}
-               placeholder={`Filter by ${key}`}
-               value={filters[key]}
-               onChange={handleFilterChange}
-             />
-           ))}
-         </div>
-
+        <div className='userFilters'>
+          {Object.keys(filters).map((key) => (
+            <input
+              key={key}
+              type="text"
+              name={key}
+              placeholder={`Filter by ${key}`}
+              value={filters[key]}
+              onChange={handleFilterChange}
+            />
+          ))}
+        </div>
+        
         {/* -------- FILTERED & SORTED TABLE -------- */}
-         <table>
-           <thead>
-             <tr>
-               {["id", "first_name", "last_name", "email", "role", "major"].map((key) => (
-                 <th key={key} onClick={() => handleSort(key)}>
-                   {key.toUpperCase()}{" "}
-                   {sort.key === key
-                     ? sort.direction === "asc"
-                       ? "↑"
-                       : "↓"
-                     : ""}
-                 </th>
-               ))}
-             </tr>
-           </thead>
-           <tbody>
-             {filteredAndSortedUsers.map((user) => (
-               <tr key={user.id}>
-                 <td width="25%" style={{ fontSize: '0.62rem' }}>{user.id}</td>
-                 <td width="15%">{user.first_name}</td>
-                 <td width="15%">{user.last_name}</td>
-                 <td width="15%">{user.email}</td>
-                 <td width="15%">{user.role}</td>
-                 <td width="15%">{user.major || "N/A"}</td>
-               </tr>
-             ))}
-           </tbody>
-         </table>
+          <table>
+            <thead>
+              <tr>
+                {["id", "first_name", "last_name", "email", "role", "major"].map((key) => (
+                  <th key={key} onClick={() => handleSort(key)}>
+                    {key.toUpperCase()}{" "}
+                    {/* --- toggle sort of active key to show ↑ or ↓ arrow --- */}
+                    {/* --- inactive keys will not show an arrow --- */}
+                    {sort.key === key
+                      ? sort.direction === "asc"
+                        ? "↑" : "↓"
+                      : ""
+                    }
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filteredAndSortedUsers.map((user) => (
+                <tr key={user.id}>
+                  <td width="25%" style={{ fontSize: '0.62rem' }}>{user.id}</td>
+                  <td width="15%">{user.first_name}</td>
+                  <td width="15%">{user.last_name}</td>
+                  <td width="15%">{user.email}</td>
+                  <td width="15%">{user.role}</td>
+                  <td width="15%">{user.major || "N/A"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-         {/* --- Display "No users found" if there are no matching filters --- */}
+        {/* --- Display "No users found" if there are no matching filters --- */}
         {filteredAndSortedUsers.length === 0 && <p>No users found.</p>}
       </div>
-    </>
+    </div>
   );
 };
 
 export default UserTable;
-
-
-      // const userLC = (column) => { column?.toLowerCase(); };
-      // const filterLC = (column) => { column.toLowerCase(); };
-
-      // const idMatch = (userLC(user.id) || "").includes(filterLC(filters.id));
-      // const emailMatch = (userLC(user.email) || "").includes(filterLC(filters.email));
-      // const roleMatch = (userLC(user.role) || "").includes(filterLC(filters.role));
-      // const firstNameMatch = (userLC(user.first_name) || "").includes(filterLC(filters.first_name));
-      // const lastNameMatch = (userLC(user.last_name) || "").includes(filterLC(filters.last_name));
-      // const majorMatch = (userLC(user.major) || "").includes(filterLC(filters.major));
