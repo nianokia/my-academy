@@ -11,13 +11,17 @@ const Prerequisite = sequelize.define('Prerequisite', {
     },
     course_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        references: { model: 'courses', key: 'id' },
+        onDelete: 'CASCADE',
     },
     prerequisite_course_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        references: { model: 'courses', key: 'id' },
+        onDelete: 'CASCADE',
     },
 }, {
     tableName: 'prerequisites',
