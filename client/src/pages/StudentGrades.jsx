@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router";
 import AuthContext from "../context/AuthContext";
 import { fetchStudentGrades, fetchGradeHistory } from "../api/grade";
 import { BackButton, gradeOptions, calculateGPA, getGradeColor } from "../constants/constants";
@@ -68,7 +69,12 @@ const StudentGrades = () => {
       {!loading && (
         <>
           {grades.length === 0 ? (
-            <p>You are not enrolled in any courses yet.</p>
+            <div>
+              <p>You are not enrolled in any courses yet.</p>
+              <button>
+                <Link to='/student-courses'>→ Course Enrollment</Link>
+              </button>
+            </div>
           ) : (
             <table>
               <thead>
