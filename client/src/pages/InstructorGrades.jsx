@@ -2,15 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
 import { fetchStudentGrades, assignGrade } from "../api/grade";
-import { BackButton, calculateGPA } from "../constants/constants";
+import { BackButton, calculateGPA, getGradeColor } from "../constants/constants";
 
 // - ⚠️ Grade Management
 //    - ✅ Student Selection ––> Dropdown for choosing students
 //    - ✅ Course Overview ––> Table showing all courses a student is enrolled in
 //    - ✅ Grade Assignment ––> Assign grades from A+ to F scale
 //    - ❌ Grade History ––> View current grades for all enrolled courses
-//    - ❌ GPA Calculation ––> Automatic calculation and display of student GPA
-//    - ❌ Color-Coded Grades ––> Visual indicators for different grade levels
+//    - ✅ GPA Calculation ––> Automatic calculation and display of student GPA
+//    - ✅ Color-Coded Grades ––> Visual indicators for different grade levels
 //    - ❌ Date Tracking ––> Record and display when grades were assigned
 
 const InstructorGrades = () => {
@@ -20,7 +20,7 @@ const InstructorGrades = () => {
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const gradeOptions = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
+  const gradeOptions = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
   // -------- FETCH ALL STUDENTS --------
   const fetchStudents = async () => {
@@ -123,7 +123,9 @@ const InstructorGrades = () => {
                   <tr key={enrollment.id}>
                     <td>{enrollment.Course?.name}</td>
                     <td>{enrollment.Course?.credits}</td>
-                    <td>{enrollment.Grade?.grade || "N/A"}</td>
+                    <td style={{ backgroundColor: getGradeColor(enrollment.Grade?.grade), color: "black", borderRadius: "15px" }}>
+                      {enrollment.Grade?.grade || "N/A"}
+                    </td>
                     <td>
                       {
                         enrollment.Grade?.instructor
