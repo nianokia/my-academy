@@ -94,17 +94,20 @@ const AllCourses = () => {
         </button>
       </header>
       {/* -------- FILTERS -------- */}
-      <div className="courseFilters">
-        {Object.keys(filters).map((key) => (
-          <input
-            type="text"
-            key={key}
-            name={key}
-            value={filters[key]}
-            onChange={handleFilterChange}
-            placeholder={`Filter by ${key}`}
-          />
-        ))}
+      <div className="filtersContainer">
+        <h3>Filter Courses</h3>
+        <div className="courseFilters">
+          {Object.keys(filters).map((key) => (
+            <input
+              type="text"
+              key={key}
+              name={key}
+              value={filters[key]}
+              onChange={handleFilterChange}
+              placeholder={`Filter by ${key}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* -------- TOGGLE VIEW -------- */}

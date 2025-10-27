@@ -389,6 +389,14 @@
   cursor: pointer;
 }
 
+.filtersContainer {
+  margin: -2rem 0 0 2rem;
+}
+
+.filtersContainer h3 {
+  text-align: start;
+}
+
 .courseFilters {
   display: flex;
   margin: 1rem 0;
