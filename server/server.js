@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import enrollmentRoutes from './routes/enrollmentRoutes.js';
+import gradeRoutes from './routes/gradeRoutes.js';
 import sequelize from "./db/dbConfig.js";
 import "./models/associations.js";
 
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/courses', courseRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
+app.use("/api/grades", gradeRoutes);
 
 // -------- VERIFY SEQUELIZE/ DATABASE CONNECTION --------
 async function testDBConnection() {
