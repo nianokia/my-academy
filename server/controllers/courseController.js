@@ -103,7 +103,7 @@ export const createCourse = async (req, res) => {
 // // -------- UPDATE A COURSE --------
 export const updateCourse = async (req, res) => {
     const { courseId } = req.params;
-    const { name, credits, enrollment_limit } = req.body;
+    const { name, credits, enrollment_limit, prerequisites } = req.body;
     try {
         const course = await Course.findByPk(courseId);
         if (!course) return res.status(404).json({ message: "Course not found" });
@@ -115,10 +115,30 @@ export const updateCourse = async (req, res) => {
             enrollment_limit: enrollment_limit || course.enrollment_limit,
         });
 
-        // --- Get plain JS object ---
-        const updatedCourse = course.get({ plain: true });
-        res.status(200).json({ message: 'User updated successfully: ', course: updatedCourse });
+        // --- Update prerequisites if provided ---
+        if (Array.isArray(prerequisites)) {
+            // --- Remove existing prereqs ---
+            await Prerequisite.destroy({ where: { course_id: courseId } });
+
+            // --- Add new prereqs ---
+            if (prerequisites.length > 0) {
+                await Promise.all(
+                    prerequisites.map((prereqId) =>
+                        Prerequisite.create({ course_id: courseId, prerequisite_course_id: prereqId })
+                    )
+                );
+            }
+        }
+
+        // // --- Get plain JS object ---
+        // const updatedCourse = course.get({ plain: true });
+
+        const updatedCourse = await Course.findByPk(courseId, {
+            include: [{ association: "prerequisites", attributes: ["id", "name"] }],
+        });
+        res.status(200).json({ message: 'Course updated successfully: ', course: updatedCourse });
     } catch (err) {
+        console.error("Error updating course:", err);
         res.status(500).json({ message: "Error updating course", error: err.message });
     }
 };
