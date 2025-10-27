@@ -2,15 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router";
 import AuthContext from "../context/AuthContext";
 import { fetchStudentGrades, fetchGradeHistory } from "../api/grade";
-import { BackButton, gradeOptions, calculateGPA, getGradeColor } from "../constants/constants";
+import { BackButton, calculateGPA, getGradeColor } from "../constants/constants";
 import Modal from "../components/Modal";
-
-// - ⚠️ Grade Management
-//    - ❌ Course Overview ––> Table showing all courses a student is enrolled in
-//    - ❌ Grade History ––> View current grades for all enrolled courses
-//    - ❌ GPA Calculation ––> Automatic calculation and display of student GPA
-//    - ❌ Color-Coded Grades ––> Visual indicators for different grade levels
-//    - ❌ Date Tracking ––> Record and display when grades were assigned
 
 const StudentGrades = () => {
   const { user, token } = useContext(AuthContext);
