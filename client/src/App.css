@@ -322,7 +322,7 @@
 .enrollmentContainer ul {
   height: 10rem;
   margin: 0;
-  padding: 0;
+  padding: 0.25rem 0 0 0;
   background: rgba(0,0,0,0.07);
   text-align: start;
   border-radius: 10px;
@@ -333,15 +333,41 @@
 .enrolledStudents li {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.2rem 1rem;
+}
+.enrolledStudents input {
+  width: 80%;
+  margin-bottom: 0.75rem;
+}
+
+.noEnrolled {
+  padding: 0.5rem;
+  text-align: center;
+  opacity: 0.7;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .availableStudents {
   padding: 0 0.5rem;
 }
 
+.availableSearch {
+  width: 80%;
+  margin-bottom: 0.75rem;
+}
+
 .availableStudents span {
   margin-left: -2rem;
+}
+
+.noneAvailable {
+  padding: 0.5rem;
+  text-align: center;
+  opacity: 0.7;
+  margin-top: 0.55rem;
+  margin-left: -3.5rem;
 }
 
 .enrollBtn {
