@@ -33,15 +33,27 @@ Course.belongsToMany(Course, {
 });
 
 // --- One Enrollment has one Grade ---
-Enrollment.hasOne(Grade, { foreignKey: "enrollment_id", onDelete: "CASCADE" });
+Enrollment.hasOne(Grade, { foreignKey: "enrollment_id", as: "Grade", onDelete: "CASCADE" });
 
 // --- A grade belongs to an enrollment ---
-Grade.belongsTo(Enrollment, { foreignKey: "enrollment_id" });
+Grade.belongsTo(Enrollment, { foreignKey: "enrollment_id", as: "Enrollment" });
 
 // --- An Instructor assigns many grades ---
 User.hasMany(Grade, { foreignKey: "assigned_by" });
 
 // --- A grade belongs to an instuctor since they assigned it ---
 Grade.belongsTo(User, { as: "instructor", foreignKey: "assigned_by" });
+
+// --- Each enrollment belongs to one course ---
+Enrollment.belongsTo(Course, { foreignKey: "course_id", as: "Course" });
+
+// --- Each enrollment belongs to one student ---
+Enrollment.belongsTo(User, { foreignKey: "student_id", as: "Student" });
+
+// --- A course can have many enrollments ---
+Course.hasMany(Enrollment, { foreignKey: "course_id", as: "Enrollments" });
+
+// --- A student (User) can have many enrollments ---
+User.hasMany(Enrollment, { foreignKey: "student_id", as: "Enrollments" });
 
 export { User, Course, Enrollment, Prerequisite, Grade };
