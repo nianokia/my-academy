@@ -1,17 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { fetchUsers } from "../api/user";
-import { fetchStudentGrades, assignGrade } from "../api/grade";
+import { fetchStudentGrades, fetchGradeHistory, assignGrade } from "../api/grade";
 import { BackButton, calculateGPA, getGradeColor } from "../constants/constants";
+import Modal from "../components/Modal";
 
-// - ⚠️ Grade Management
+// - ✅ Grade Management
 //    - ✅ Student Selection ––> Dropdown for choosing students
 //    - ✅ Course Overview ––> Table showing all courses a student is enrolled in
 //    - ✅ Grade Assignment ––> Assign grades from A+ to F scale
-//    - ❌ Grade History ––> View current grades for all enrolled courses
+//    - ✅ Grade History ––> View current grades for all enrolled courses
 //    - ✅ GPA Calculation ––> Automatic calculation and display of student GPA
 //    - ✅ Color-Coded Grades ––> Visual indicators for different grade levels
-//    - ❌ Date Tracking ––> Record and display when grades were assigned
+//    - ✅ Date Tracking ––> Record and display when grades were assigned
 
 const InstructorGrades = () => {
   const { token } = useContext(AuthContext);
@@ -19,6 +20,8 @@ const InstructorGrades = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const gradeOptions = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
@@ -73,6 +76,18 @@ const InstructorGrades = () => {
     }
   };
 
+  // -------- HANDLE VIEW GRADE HISTORY --------
+  const handleViewHistory = async (enrollmentId) => {
+  try {
+    const gradeHistory = await fetchGradeHistory(enrollmentId, token);
+    setHistory(gradeHistory);
+    setIsModalOpen(true);
+  } catch (err) {
+    console.error("Error fetching grade history:", err);
+    alert("Failed to load grade history");
+  }
+};
+
   // -------- GPA CALCULATION --------
   // --- collect array of enrolled grades to send to calculateGPA---
   const gpa = calculateGPA(
@@ -115,6 +130,7 @@ const InstructorGrades = () => {
                   <th>Current Grade</th>
                   <th>Assigned By</th>
                   <th>Assigned At</th>
+                  <th>Grade History</th>
                   <th>Update Grade</th>
                 </tr>
               </thead>
@@ -141,6 +157,9 @@ const InstructorGrades = () => {
                       }
                     </td>
                     <td>
+                      <button onClick={() => handleViewHistory(enrollment.id)}>View</button>
+                    </td>
+                    <td>
                       <select defaultValue={enrollment.Grade?.grade || ""}
                         onChange={(e) => handleGradeChange(enrollment.id, e.target.value)}
                       >
@@ -161,6 +180,25 @@ const InstructorGrades = () => {
           {grades.length > 0 && (
             <h3>Current GPA: <span className="gpaDisplay">{gpa}</span></h3>
           )}
+
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <h3 className="gradeHistoryTitle">Grade History</h3>
+            {history.length > 0 ? (
+              <ul className="gradeHistoryContainer">
+                {history.map((g) => (
+                  <li key={g.id} className="gradeHistoryRecord" style={{ backgroundColor: getGradeColor(g.grade) }}>
+                    <span>
+                      {g.grade}
+                    </span>{" "}
+                    {`- Assigned by ${g.instructor?.first_name} ${g.instructor?.last_name} on ${new Date(g.assigned_at).toLocaleDateString()}`}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No history found.</p>
+            )}
+          </Modal>
+
         </>
       )}
     </div>

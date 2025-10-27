@@ -485,3 +485,9 @@
 .gpaDisplay {
   color: cornflowerblue
 }
+
+.gradeHistoryRecord {
+  color: black;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+}
