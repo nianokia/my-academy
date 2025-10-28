@@ -57,6 +57,7 @@ This project integrates a Postgres database with an Express.js backend and a mod
 
 ## 🎬 Demo  
 ![demo](https://media4.giphy.com/media/v1.Y2/giphy.gif)
+[Video](https://youtu.be/doNFe0Oz1qk)
 
 ---
 ## 🗄️ Database Setup
