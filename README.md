@@ -35,7 +35,6 @@ This project integrates a Postgres database with an Express.js backend and a mod
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue)
 ![Nodemon](https://img.shields.io/badge/NODEMON-%23323330.svg?style=for-the-badge&logo=nodemon&logoColor=%BBDEAD)
-![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
 
 ## ⚙️ Dependencies Overview
@@ -56,8 +55,9 @@ This project integrates a Postgres database with an Express.js backend and a mod
 ---
 
 ## 🎬 Demo  
-![demo](https://media4.giphy.com/media/v1.Y2/giphy.gif)
-[Video](https://youtu.be/doNFe0Oz1qk)
+![demo](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeG4wMTRzeDU1enh1bXE0N3Z2ZmhjbTA4amp6MjZtc3J0dXhuZWU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lomS3lCn9F0MvtcNcW/giphy.gif)
+
+[Full Video](https://youtu.be/doNFe0Oz1qk)
 
 ---
 ## 🗄️ Database Setup
